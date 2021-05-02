@@ -4,13 +4,8 @@ from django.contrib.auth.models import User
 
 class Account(models.Model):
     """
-    Account Model
-
-    Attributes:
-         user       - One to one relationship with the user model
-         first_name - String field
-         last_name  - String field
-         photo      - Url to the account photo
+    Account Model that represents the user profile if one is created
+    Has a one-to-one relationship with the User Model
      """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=300)
@@ -23,18 +18,8 @@ class Account(models.Model):
 
 class PaymentInfo(models.Model):
     """
-    Payment Info Model
-
-    Attributes:
-        account             - One to one relationship with the Account model
-        cvc                 - Integer field
-        expiration_date     - Date field
-        street_name         - String field
-        house_number        - Integer field
-        city                - String field
-        postal_code         - String field
-        name_of_cardholder  - String field
-        card_number         - String field
+    Payment Info Model stores various payment information
+    Has a one-to-one relationship with the Account Model
     """
     account = models.OneToOneField(Account, on_delete=models.CASCADE)
     cvc = models.IntegerField()
@@ -52,13 +37,8 @@ class PaymentInfo(models.Model):
 
 class SearchHistoryEntry(models.Model):
     """
-    Search History Entry Model
-
-    - Represents individual searches made by the user
-
-    Attributes:
-        account - One to one relationship with the Account model
-        url     - String field
+    Search History Entry Model Represents individual searches made by a user
+    Has a many-to-one relationship with the Account Model
     """
     account = models.OneToOneField(Account, on_delete=models.CASCADE)
     url = models.CharField(max_length=500)
