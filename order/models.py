@@ -1,3 +1,27 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+from user.models import Product
+
+
+class Order(models.Model):
+    """
+    Order model represents a single order made by user
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_created = models.DateField(auto_now_add=True)
+    total_price = models.FloatField()
+    street_name = models.CharField(max_length=300)
+    house_number = models.IntegerField()
+    city = models.CharField(max_length=300)
+    postal_code = models.IntegerField()
+
+
+class OrderContains(models.Model):
+    """
+    OrderContains model represents a single products appearance in an order
+    and its quantity
+    """
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
