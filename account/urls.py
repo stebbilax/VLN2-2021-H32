@@ -1,0 +1,10 @@
+from django.urls import path, include
+from .views import (account_page, login_page, logout,
+                    reset_password)
+
+urlpatterns = [
+    path('', account_page, name='account'),
+    path('login', login_page, name='login'),
+    path('logout', logout, name='logout'),
+    path('reset_password', reset_password, name='reset_password')
+]
