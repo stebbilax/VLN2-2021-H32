@@ -1,7 +1,8 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
+
+from .forms import CreateUserForm
 
 
-# Create your views here.
 #   GET - get account info
 #   POST / PATCH / PUT - change account info
 #   DELETE - Delete account
@@ -21,3 +22,13 @@ def reset_password(request):
     return HttpResponse('Reset password')
 
 
+def create_account(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {"form": form}
+    return render(request, 'account/create_user.html', context)

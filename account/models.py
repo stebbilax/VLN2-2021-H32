@@ -8,8 +8,8 @@ class Account(models.Model):
     Has a one-to-one relationship with the User Model
      """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=300)
-    last_name = models.CharField(max_length=300)
+    first_name = models.CharField(max_length=300, default='John')
+    last_name = models.CharField(max_length=300, default='Doe')
     photo = models.ImageField(null=True, blank=True)
 
     def __str__(self):
