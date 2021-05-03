@@ -8,5 +8,3 @@ from account.models import Account
 def create_account(sender, instance, created, **kwargs):
     if created:
         Account.objects.create(user=instance)
-
-    print('Ran')
