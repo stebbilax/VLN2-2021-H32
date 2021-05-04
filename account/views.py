@@ -12,7 +12,7 @@ from .decorators import check_if_user_exists
 #   DELETE - Delete account
 
 #Create Views
-def index(request):
+def account_page(request):
     return render(request, 'account/index.html')
 
 
