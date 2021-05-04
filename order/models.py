@@ -16,6 +16,9 @@ class Order(models.Model):
     city = models.CharField(max_length=300)
     postal_code = models.IntegerField()
 
+    def __str__(self):
+        return f"Order with ID: {self.id}"
+
 
 class OrderContains(models.Model):
     """
@@ -26,3 +29,5 @@ class OrderContains(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
+    def __str__(self):
+        return f"Order Nr {self.order.id} contains {self.product}"
