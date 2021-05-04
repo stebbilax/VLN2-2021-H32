@@ -1,6 +1,6 @@
-from django.test import TestCase, RequestFactory, Client
+from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, logout, get_user
+from django.contrib.auth import authenticate, get_user
 from django.urls import reverse
 
 
