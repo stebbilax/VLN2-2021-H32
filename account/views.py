@@ -10,8 +10,10 @@ from .decorators import check_if_user_exists
 #   GET - get account info
 #   POST / PATCH / PUT - change account info
 #   DELETE - Delete account
-def account_page(request):
-    return HttpResponse('Account page')
+
+#Create Views
+def index(request):
+    return render(request, 'account/index.html')
 
 
 def login_page(request):
@@ -52,3 +54,5 @@ def create_account(request):
 
     context = {"form": form}
     return render(request, 'account/create_user.html', context)
+
+
