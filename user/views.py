@@ -1,10 +1,10 @@
 from django.shortcuts import render, HttpResponse
-
+from .models import Product
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'cart/index.html')
+    return render(request, 'user/index.html')
 
 
 def about_us_page(request):
@@ -16,4 +16,8 @@ def contact_us_page(request):
 
 
 def products_page(request):
-    return HttpResponse('Products')
+    """ Displays product page """
+    products = Product.objects.all()
+
+    context = {'products': products}
+    return render(request, 'user/products.html', context)
