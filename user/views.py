@@ -1,9 +1,10 @@
 from django.shortcuts import render, HttpResponse
 
 
+
 # Create your views here.
-def home_page(request):
-    return HttpResponse('Home Page')
+def index(request):
+    return render(request, 'cart/index.html')
 
 
 def about_us_page(request):
