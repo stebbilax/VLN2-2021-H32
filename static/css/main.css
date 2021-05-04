@@ -21,11 +21,20 @@
     border-bottom: 1px solid white;
     margin-bottom: 16px;
 }
-.container-fluid {
-    background-color: #10e3ae !important;
-    color: white;
-}
+/*.container-fluid {*/
+/*    background-color: #10e3ae !important;*/
+/*    color: white;*/
+/*}*/
 .footer-element{
     margin-top: 16px;
     margin-bottom: 16px;
+}
+
+/*Testing class*/
+.bb {
+    border: 1px solid black;
+}
+/*Testing class*/
+.br {
+    border: 1px solid red;
 }
