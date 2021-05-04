@@ -37,10 +37,6 @@ def logout_user(request):
     return redirect('home')
 
 
-def reset_password(request):
-    return HttpResponse('Reset password')
-
-
 @check_if_user_exists
 def create_account(request):
     form = CreateUserForm()
