@@ -1,16 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+    <script>
+        const CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+
     <div class="container-fluid">
         {% for item in items %}
-            <div class="row bb">
-                <div class="col br">
-                    <p>{{ item.product.name }}</p>
-                </div>
-                <div class="col br">
-                    <p>{{ item.quantity }}</p>
-                </div>
+                <div class="row text-center bb">
+                    <div class="col-4">
+                        <p class="text-center">{{ item.product.name }}</p>
+                    </div>
+                    <div class="col-1">
+                        <button class="increment-button" name="{{ item.id }}" type="submit">+</button>
+                    </div>
+                    <div class="col-1">
+                        <p id="item-{{ item.id }}">{{ item.quantity }}</p>
+                    </div>
+                    <div class="col-1">
+                        <button class="decrement-button" name="{{ item.id }}" type="submit">-</button>
+                    </div>
 
-            </div>
+                </div>
         {% endfor %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{% static 'js/update_product_quantity.js' %}"></script>
     </div>
 {% endblock %}
