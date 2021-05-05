@@ -5,7 +5,6 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import Cart, CartItem
 
 
-
 def cart_page(request):
     cart = Cart.objects.filter(user=request.user)
     if cart:
