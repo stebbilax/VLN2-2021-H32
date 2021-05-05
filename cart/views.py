@@ -3,6 +3,7 @@ import json
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Cart, CartItem
+from .decorators import check_item_owner
 
 
 def cart_page(request):
@@ -16,6 +17,7 @@ def cart_page(request):
     return render(request, 'cart/cart_page.html', context)
 
 
+@check_item_owner
 def increase_quantity(request, item_id):
     """
     Receives the id of a cart item and increments its value by one
@@ -34,6 +36,7 @@ def increase_quantity(request, item_id):
             return HttpResponseBadRequest()
 
 
+@check_item_owner
 def decrease_quantity(request, item_id):
     """
     Receives the id of a cart item and decrements its value by one
