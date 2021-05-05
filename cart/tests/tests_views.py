@@ -8,7 +8,6 @@ from cart.views import increase_quantity, decrease_quantity
 
 
 class ChangeQuantityTestCase(TestCase):
-
     def setUp(self):
         self.user = User.objects.create(
             username='TestingBob', email='bob@bob.com', password='qwerty'
