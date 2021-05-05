@@ -1,7 +1,7 @@
 import django_filters
 from django_filters import RangeFilter, CharFilter
 
-from .models import Product
+from .models import Product, Keyword
 
 
 class ProductNameFilter(django_filters.FilterSet):
@@ -11,10 +11,15 @@ class ProductNameFilter(django_filters.FilterSet):
         fields = ['name']
 
 
-class ProductPriceFilter(django_filters.FilterSet):
-    price = RangeFilter()
+class KeywordFilter:
 
-    class Meta:
-        model = Product
-        fields = ['price']
+    @staticmethod
+    def filter(querySet, keyword):
+        to_be_deleted = []
+        for el in querySet:
+            if not Keyword.objects.filter(name=keyword, product=el):
+                to_be_deleted.append(el.id)
 
+        querySet.filter(id__in=to_be_deleted).delete()
+        print(querySet)
+        return querySet

@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 from .models import Product, ProductPhoto, Category
 from .decorators import products_page_filter
-from .filters import ProductNameFilter
+from .filters import ProductNameFilter, KeywordFilter
 
 
 def index(request):
@@ -73,6 +73,19 @@ def products_page(request, category):
 
 def get_product_data(request):
     products = Product.objects.all()
+
+    price = request.GET.get('price')
+    keyword = request.GET.get('keyword')
+    order = request.GET.get('order')
+
+    if price:
+        min_max = price.split('-')
+        products = products.filter(price__gte=float(min_max[0]),
+                                   price__lte=float(min_max[1]))
+    if keyword:
+        KeywordFilter.filter(products, keyword)
+
+    # Add photos
     product_list = []
     for prod in products:
         img = ProductPhoto.objects.filter(product=prod)
