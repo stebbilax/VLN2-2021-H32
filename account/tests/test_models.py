@@ -34,7 +34,7 @@ class PaymentInfoTestCase(TestCase):
     """ Testing payment info creation"""
 
     def setUp(self):
-        self.user = User.objects.create_user(
+        self.user = User.objects.create(
             username='TestingBob', email='bob@bob.com', password='qwerty'
         )
         self.payment_info = PaymentInfo.objects.create(
