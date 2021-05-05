@@ -1,9 +1,10 @@
 from django.urls import path, include
-from .views import index, contact_us_page, about_us_page, products_page
+from .views import index, contact_us_page, about_us_page, products_page, get_product_data
 
 urlpatterns = [
     path('', index, name='home'),
-    path('contact', contact_us_page, name='contact'),
-    path('about', about_us_page, name='about'),
-    path('products', products_page, name='products')
+    path('contact/', contact_us_page, name='contact'),
+    path('about/', about_us_page, name='about'),
+    path('products/<str:category>/', products_page, name='products'),
+    path('get_product_data/', get_product_data, name='get_product_data')
 ]
