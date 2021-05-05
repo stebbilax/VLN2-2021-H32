@@ -40,7 +40,7 @@ class ProductPhoto(models.Model):
     """
     ProductPhoto Model contains a url to a photo of a product and the product itself.
     """
-    # url = models.CharField(max_length=300)
+    # url = models.CharField(max_length=300, default='removeThis')
     photo = models.ImageField(null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
