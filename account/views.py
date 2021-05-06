@@ -19,7 +19,8 @@ def account_page(request):
             form.save()
             return redirect('account')
 
-    user_obj = {'img': account.photo.url}
+    user_obj = {'img': account.photo_url}
+    print(user_obj)
 
     context = {'user_obj': user_obj, 'user_form': account_form}
     return render(request, 'account/account_page.html', context)
