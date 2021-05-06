@@ -21,8 +21,8 @@ class AccountCreationTestCase(TestCase):
 
     def test_account_properties(self):
         """ Test that the account has a first and last name"""
-        self.assertEqual(self.user.account.first_name, 'John')
-        self.assertEqual(self.user.account.last_name, 'Doe')
+        self.assertEqual(self.user.account.first_name, '')
+        self.assertEqual(self.user.account.last_name, '')
 
 
 class LoginTestCase(TestCase):

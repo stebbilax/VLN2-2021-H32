@@ -20,8 +20,8 @@ class AccountTestCase(TestCase):
 
     def test_access_through_user(self):
         """ Test that user has access to account correct properties"""
-        self.assertEqual(self.user.account.first_name, 'John')
-        self.assertEqual(self.user.account.last_name, 'Doe')
+        self.assertEqual(self.user.account.first_name, '')
+        self.assertEqual(self.user.account.last_name, '')
 
     def test_access_through_account(self):
         """ Test that account has access to user correct properties"""
