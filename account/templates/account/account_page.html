@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="container">
+        <p class="fs-2 offset-md-1">Account Overview</p>
+        <div class="bg-white p-2 rounded">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mt-4">
+                        <img src="{{ user_obj.img }}" alt="Profile Picture" class="col-md-7 offset-md-2 rounded-circle img-fluid">
+                    </div>
+                    <div class="col-md-6 mt-4">
+                {{ user_form.as_p }}
+                <button type="submit" class="col-md-5 offset-md-7 btn btn-primary mt-5" id="edit-profile-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </main>
+{% endblock %}
