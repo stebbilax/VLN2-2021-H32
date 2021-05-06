@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 
 from .forms import CreateUserForm, LoginForm, EditAccountForm
 from .decorators import check_if_user_exists
@@ -11,9 +11,10 @@ from .decorators import check_if_user_exists
 #   POST / PATCH / PUT - change account info
 #   DELETE - Delete account
 
-#Create Views
+
+@login_required(login_url='login')
 def account_page(request):
-    return render(request, 'account/index.html')
+    return HttpResponse('Account page')
 
 
 def login_page(request):
@@ -33,6 +34,7 @@ def login_page(request):
     return render(request, 'account/login.html', context)
 
 
+@login_required(login_url='login')
 def logout_user(request):
     """ Logout function """
     logout(request)

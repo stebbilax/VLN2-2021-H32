@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
+ <main class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="bg-white p-2 rounded">
+            <div class="row">
+                <img src="{% static 'images/ship.svg' %}" class="col-md-4 offset-md-4" alt="User" width="100" height="100">
+            </div>
+            <p class="fs-2 col-md-5 offset-md-4">Welcome to Ship O'Cereal</p>
+            <div class="row col-md-4 offset-md-4 text-center fw-bold">
+                <label for="inputName" class="form-label">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="row col-md-4 offset-md-4 text-center fw-bold">
+                <label for="inputEmail" class="form-label">Password</label>
+                {{ form.password }}
+            </div>
+            <div class="row">
+                <button type="submit" class="col-md-4 offset-md-4 btn btn-primary mt-2" id="log-in-btn">Log in</button>
+            </div>
+            <div class="row">
+                <a href="{% url 'create_account' %}" class="col-md-4 offset-md-4 btn btn-outline-primary mt-2" id="register-btn">Register</a>
+            </div>
+        </div>
+    </form>
     {% for message in messages %}
         <p id="messages">{{message}}</p>
     {% endfor %}
+ </main>
 {% endblock %}
