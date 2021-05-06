@@ -30,9 +30,19 @@
             </li>
             <li class="nav-item fs-5">
                 <a class="nav-link" href="../contact/contact.html">Contact</a>
-            </li>
+            </li> 
             </ul>
-            <ul class="navbar-nav me-2">
+            <div class="dropdown text-begin me-2">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="../assets/img/profile.png" alt="User" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item active" aria-current="page" href="../profile/profile.html">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
+            <ul class="navbar-nav me-4">
                 <li class="nav-item text-decoration-none">
                     <a href="../cart/cart.html" class="nav-link">
                         <span class="badge rounded-pill bg-primary">1</span>
@@ -40,16 +50,6 @@
                     </a>
                 </li>  
             </ul>
-            <div class="dropdown text-begin me-4">
-            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="../assets/img/profile.png" alt="User" width="32" height="32" class="rounded-circle">
-            </a>
-            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="../profile/profile.html">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-            </div>
         </div>
         </div>
     </nav>
@@ -64,12 +64,12 @@
                 </div>
                 <div class="col-md-6 mt-4">
                     <div class="row">
-                        <label for="inputName" class="form-label fw-bold">Name</label>
-                        <input type="name" id="inputName" readonly class="form-control form-control-lg mb-4" value="John Johnson">
+                        <label for="name-readonly" class="form-label fw-bold">Name</label>
+                        <input type="name" id="name-readonly" readonly class="form-control form-control-lg mb-4" value="John Johnson">
                     </div>
                     <div class="row">
-                        <label for="inputEmail" class="form-label fw-bold">Email</label>
-                        <input type="email" id="inputEmail" readonly class="form-control form-control-lg mb-4" value="johnnyjay@live.com">
+                        <label for="email-readonly" class="form-label fw-bold">Email</label>
+                        <input type="email" id="email-readonly" readonly class="form-control form-control-lg mb-4" value="johnnyjay@live.com">
                     </div>
                     <div class="row">
                         <button type="button" class="col-md-5 offset-md-7 btn btn-primary mt-5" id="edit-profile-btn">Edit profile</button>
