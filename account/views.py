@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
-from .forms import CreateUserForm, LoginForm
+from .forms import CreateUserForm, LoginForm, EditAccountForm
 from .decorators import check_if_user_exists
 
 
@@ -50,5 +50,25 @@ def create_account(request):
 
     context = {"form": form}
     return render(request, 'account/create_user.html', context)
+
+
+def edit_account(request):
+    def get_object(self):
+        return self.request.user
+
+    form = EditAccountForm(request.POST, instance=request.user)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('/account/')
+
+        else:
+            form = EditAccountForm(instance=request.user)
+            args = {'form': form}
+            return render(request, 'account/edit_account.html', args)
+    args = {'form': form}
+    return render(request, 'account/edit_account.html', args)
+
+
 
 
