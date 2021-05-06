@@ -25,17 +25,8 @@
             </div>
         </div>
     </form>
+    {% for message in messages %}
+        <p id="messages">{{message}}</p>
+    {% endfor %}
  </main>
 {% endblock %}
-
-
-
-{# <h2>Login</h2>#}
-{#  <form method="post">#}
-{#    {% csrf_token %}#}
-{#    {{ form.as_p }}#}
-{#    <button type="submit">Login</button>#}
-{#  </form>#}
-{#    {% for message in messages %}#}
-{#        <p id="messages">{{message}}</p>#}
-{#    {% endfor %}#}

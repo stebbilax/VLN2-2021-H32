@@ -13,7 +13,8 @@ from .decorators import check_if_user_exists
 
 #Create Views
 def account_page(request):
-    return render(request, 'account/index.html')
+    print('ran')
+    return HttpResponse('Account page')
 
 
 def login_page(request):
