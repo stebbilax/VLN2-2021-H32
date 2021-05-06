@@ -1,9 +1,109 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-{% for product in products %}
-    <div>
-        <p>{{ product.name }}</p>
-    </div>
-{% endfor %}
+    <script>
+        const CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+
+    <main class="container">
+        <div class="bg-white p-4 rounded">
+            <div class="row">
+                <form class="col-md-8 d-flex">
+{#                    <input class="form-control me-2" type="search" placeholder="Search for products" aria-label="Search">#}
+                    {{ product_filter.form.name }}
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="order-dropdown" data-bs-toggle="dropdown" aria-expanded="false">Order by: </button>
+                    <ul class="dropdown-menu" aria-labelledby="order-dropdown">
+                        <li><button class="dropdown-item order-by-button" name="price-asc" type="button" id="order-price-asc-btn">Order by price asc.</button></li>
+                        <li><button class="dropdown-item order-by-button" name="price-desc" type="button" id="order-price-desc-btn">Order by price desc.</button></li>
+                        <li><button class="dropdown-item order-by-button" name="name-asc" type="button" id="order-name-asc-btn">Order by name asc.</button></li>
+                        <li><button class="dropdown-item order-by-button" name="name-desc" type="button" id="order-name-desc-btn">Order by name desc.</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-2 g-4">
+                <div class="row col-md-3 g-4">
+                    <div class="card">
+                        <article class="card-group-item">
+                            <div class="card-header bg-transparent border-warning"></div>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <label class="form-check">
+                                        <input class="form-check-input price-by-button" name="10-20" type="radio" name="exampleRadio" value="">
+                                        <span class="form-check-label">$9.99-$19.99</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input class="form-check-input price-by-button" name="20-30" type="radio" name="exampleRadio" value="">
+                                        <span class="form-check-label">$19.99-$29.99</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input class="form-check-input price-by-button" name="30-40" type="radio" name="exampleRadio" value="">
+                                        <span class="form-check-label">$29.99-$39.99</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input class="form-check-input price-by-button" name="40-9999" type="radio" name="exampleRadio" value="">
+                                        <span class="form-check-label">$39.99 and above</span>
+                                    </label>
+                                </div> <!-- card-body.// -->
+                            </div>
+                        </article> <!-- card-group-item.// -->
+                        <article class="card-group-item">
+                            <div class="card-header bg-transparent border-warning"></div>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                <form id="keyword-container">
+                                    <label class="form-check">
+                                        <input class="form-check-input keyword-by-button" name="Fibery" type="checkbox" value="">
+                                        <span class="form-check-label">Fibery</span>
+                                    </label> <!-- form-check.// -->
+                                    <label class="form-check">
+                                        <input class="form-check-input keyword-by-button" name="Gluten Free" type="checkbox" value="">
+                                        <span class="form-check-label">Gluten Free</span>
+                                    </label> <!-- form-check.// -->
+                                    <label class="form-check">
+                                        <input class="form-check-input keyword-by-button" name="Healthy" type="checkbox" value="">
+                                        <span class="form-check-label">Healthy</span>
+                                    </label>  <!-- form-check.// -->
+                                    <label class="form-check">
+                                        <input class="form-check-input keyword-by-button" name="Multigrain" type="checkbox" value="">
+                                        <span class="form-check-label">Multigrain</span>
+                                    </label>  <!-- form-check.// -->
+                                    <label class="form-check">
+                                        <input class="form-check-input keyword-by-button" name="Sugary" type="checkbox" value="">
+                                        <span class="form-check-label">Sugary</span>
+                                    </label>  <!-- form-check.// -->
+                                </form>
+
+                                </div> <!-- card-body.// -->
+                            </div>
+                        </article> <!-- card-group-item.// -->
+                    </div> <!-- card.// -->
+                </div>
+                <div class="row row-cols-md-4 col-md-9 g-4" id="product-card-container">
+                    <!-- CARDS HERE // -->
+                    {% for product in products %}
+                    <div class="col">
+                        <div class="shadow-sm card h-100 p-3 text-center text-decoration-none">
+                            <img src="{{product.img}}" class="card-img-top mx-auto" alt="..." style="width: auto; max-height: 150px">
+                            <div class="card-body">
+                                <h5 class="card-title">{{product.name }}</h5>
+                                <p class="card-text">Price: {{product.price}}</p>
+                                <a href="../product/product.html" class="stretched-link"></a>
+                                <a href="../cart/cart.html" class="btn btn-primary">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{% static './js/product_page_filters.js' %}"></script>
+
+
 {% endblock %}
