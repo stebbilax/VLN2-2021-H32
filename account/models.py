@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.templatetags.static import static
 
 
 class Account(models.Model):
@@ -23,7 +24,7 @@ class Account(models.Model):
             print(self.photo)
             return self.photo.url
 
-        return 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg'
+        return 'https://ship-o-cereal-bucket.s3.amazonaws.com/default_4ShsN9O.jpg?AWSAccessKeyId=AKIARUQJJGSAX4RFXTUO&Signature=SP2SaciykV7FUhwr9OMTu1GO9es%3D&Expires=1620332994'
 
 
 class PaymentInfo(models.Model):
