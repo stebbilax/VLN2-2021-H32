@@ -10,7 +10,8 @@ class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=300, default='John')
     last_name = models.CharField(max_length=300, default='Doe')
-    photo = models.ImageField(null=True, blank=True)
+    email = models.CharField(max_length=300, default='')
+    photo = models.ImageField(null=True, blank=True, default='profile.png')
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

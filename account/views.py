@@ -5,16 +5,24 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import CreateUserForm, LoginForm, EditAccountForm
 from .decorators import check_if_user_exists
-
-
-#   GET - get account info
-#   POST / PATCH / PUT - change account info
-#   DELETE - Delete account
+from .models import Account
 
 
 @login_required(login_url='login')
 def account_page(request):
-    return HttpResponse('Account page')
+    account = Account.objects.get(user=request.user)
+    account_form = EditAccountForm(instance=account)
+
+    if request.method == 'POST':
+        form = EditAccountForm(request.POST, request.FILES, instance=account)
+        if form.is_valid():
+            form.save()
+            return redirect('account')
+
+    user_obj = {'img': account.photo.url}
+
+    context = {'user_obj': user_obj, 'user_form': account_form}
+    return render(request, 'account/account_page.html', context)
 
 
 def login_page(request):
@@ -53,23 +61,6 @@ def create_account(request):
     context = {"form": form}
     return render(request, 'account/create_user.html', context)
 
-
-def edit_account(request):
-    def get_object(self):
-        return self.request.user
-
-    form = EditAccountForm(request.POST, instance=request.user)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect('/account/')
-
-        else:
-            form = EditAccountForm(instance=request.user)
-            args = {'form': form}
-            return render(request, 'account/edit_account.html', args)
-    args = {'form': form}
-    return render(request, 'account/edit_account.html', args)
 
 
 
