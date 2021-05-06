@@ -8,10 +8,10 @@
     font-family: 'Montserrat', sans-serif;
 }
 .bg-dark{
-    background-color: #e3df09 !important;
+    background-color: #000000 !important;
 }
 .dropdown-menu a{
-    color: #e3df09;
+    color: #000000;
 }
 .social .row{
     /* margin-top: 16px; */
