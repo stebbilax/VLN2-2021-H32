@@ -1,8 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
-from .models import Product, ProductPhoto, Category
-from .decorators import products_page_filter
-from .filters import ProductNameFilter, KeywordFilter
+from .models import Product, ProductPhoto, Category, Keyword
+from .filters import ProductNameFilter, KeywordFilter, OrderFilter, CategoryFilter, GetPhotoFilter
 
 
 def index(request):
@@ -17,62 +16,28 @@ def contact_us_page(request):
     return HttpResponse('Contact us')
 
 
-@products_page_filter
 def products_page(request, category):
-    """ Displays product page """
-
-    context = {}
-    return render(request, 'user/products.html', context)
-
-
-
-"""
-    # Filter by category
-    if category == 'merch':
-        cat = Category.objects.get(name='Merch')
-        products = Product.objects.filter(category=cat)
-    else:
-        cat = Category.objects.get(name='Cereal')
-        products = Product.objects.filter(category=cat)
-
-    # Order by
-    param = request.GET.get('sort')
-    if param == 'price_desc':
-        products = products.order_by('-price')
-    elif param == 'price_asc':
-        products = products.order_by('price')
-    elif param == 'name_desc':
-        products = products.order_by('-name')
-    elif param == 'name_asc':
-        products = products.order_by('name')
-
-    # Filter product name
+    """
+    Displays product page with all items belonging to supplied category.
+    Handles any searches by name
+    """
+    products = CategoryFilter.filter(category)
     product_filter = ProductNameFilter(request.GET, queryset=products)
     products = product_filter.qs
 
-    # Filter by price
-
-    # Grab product images
-    product_list = []
-    for prod in products:
-        img = ProductPhoto.objects.filter(product=prod)
-        if img:
-            img = img[0]
-
-        product_list.append({'id': prod.id,
-                             'name': prod.name,
-                             'price': prod.price,
-                             'img': img
-                             })
+    # Add photos
+    product_list = GetPhotoFilter.filter(products)
 
     context = {'products': product_list, 'product_filter': product_filter}
     return render(request, 'user/products.html', context)
 
-"""
 
-
-def get_product_data(request):
-    products = Product.objects.all()
+def get_product_data(request, category):
+    """
+    Returns a JsonResponse of products split by category and filtered
+    by query parameters price, keyword and order
+    """
+    products = CategoryFilter.filter(category)
 
     price = request.GET.get('price')
     keyword = request.GET.get('keyword')
@@ -82,22 +47,23 @@ def get_product_data(request):
         min_max = price.split('-')
         products = products.filter(price__gte=float(min_max[0]),
                                    price__lte=float(min_max[1]))
+
+    if order:
+        products = OrderFilter.filter(products, order)
+
     if keyword:
-        KeywordFilter.filter(products, keyword)
+        products = KeywordFilter.filter(products, keyword)
 
     # Add photos
-    product_list = []
-    for prod in products:
-        img = ProductPhoto.objects.filter(product=prod)
-        if img:
-            img = img[0]
-
-        product_list.append({'id': prod.id,
-                             'name': prod.name,
-                             'price': prod.price,
-                             'img': img.photo.url
-                             })
+    product_list = GetPhotoFilter.filter(products)
 
     context = {'products': product_list}
 
+    return JsonResponse(context)
+
+
+def get_keywords(request):
+    """ Returns a JsonResponse of all available keywords in the database """
+    keywords = Keyword.objects.distinct('name')
+    context = {'keywords': [k.name for k in keywords]}
     return JsonResponse(context)

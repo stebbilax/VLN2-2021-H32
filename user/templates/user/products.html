@@ -9,7 +9,8 @@
         <div class="bg-white p-4 rounded">
             <div class="row">
                 <form class="col-md-8 d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search for products" aria-label="Search">
+{#                    <input class="form-control me-2" type="search" placeholder="Search for products" aria-label="Search">#}
+                    {{ product_filter.form.name }}
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
                 <div class="col-md-2"></div>
@@ -27,7 +28,7 @@
                 <div class="row col-md-3 g-4">
                     <div class="card">
                         <article class="card-group-item">
-                            <div class="card-header bg-transparent border-warning">Price</div>
+                            <div class="card-header bg-transparent border-warning"></div>
                             <div class="filter-content">
                                 <div class="card-body">
                                     <label class="form-check">
@@ -50,10 +51,10 @@
                             </div>
                         </article> <!-- card-group-item.// -->
                         <article class="card-group-item">
-                            <div class="card-header bg-transparent border-warning">Cereal</div>
+                            <div class="card-header bg-transparent border-warning"></div>
                             <div class="filter-content">
                                 <div class="card-body">
-                                <form>
+                                <form id="keyword-container">
                                     <label class="form-check">
                                         <input class="form-check-input keyword-by-button" name="Fibery" type="checkbox" value="">
                                         <span class="form-check-label">Fibery</span>
@@ -79,32 +80,23 @@
                                 </div> <!-- card-body.// -->
                             </div>
                         </article> <!-- card-group-item.// -->
-                        <article class="card-group-item">
-                            <div class="card-header bg-transparent border-warning">Merchandise</div>
-                            <div class="filter-content">
-                                <div class="card-body">
-                                <form>
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <span class="form-check-label">Accessories</span>
-                                    </label> <!-- form-check.// -->
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <span class="form-check-label">Bowls</span>
-                                    </label>  <!-- form-check.// -->
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <span class="form-check-label">Clothing</span>
-                                    </label>  <!-- form-check.// -->
-                                </form>
-
-                                </div> <!-- card-body.// -->
-                            </div>
-                        </article> <!-- card-group-item.// -->
                     </div> <!-- card.// -->
                 </div>
                 <div class="row row-cols-md-4 col-md-9 g-4" id="product-card-container">
                     <!-- CARDS HERE // -->
+                    {% for product in products %}
+                    <div class="col">
+                        <div class="shadow-sm card h-100 p-3 text-center text-decoration-none">
+                            <img src="{{product.img}}" class="card-img-top mx-auto" alt="..." style="width: auto; max-height: 150px">
+                            <div class="card-body">
+                                <h5 class="card-title">{{product.name }}</h5>
+                                <p class="card-text">Price: {{product.price}}</p>
+                                <a href="../product/product.html" class="stretched-link"></a>
+                                <a href="../cart/cart.html" class="btn btn-primary">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

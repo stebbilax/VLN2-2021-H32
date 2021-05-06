@@ -2,13 +2,16 @@ window.onload = (event) => {
   main();
 };
 
+// Keeps track of all query parameters currently in use
 const queryParameters = {
     price: '',
     keyword:'',
     order:'',
+    category:'',
     setPrice: function(price){ this.price = price },
     setKeyword: function(keyword){ this.keyword = keyword},
     setOrder: function(order){ this.order = order},
+    setCategory: function(category){ this.category = category},
     getQueryString: function() {
         let str = '?';
         if(this.price !== '') {str += 'price='+this.price.toString()+'&'}
@@ -26,7 +29,7 @@ async function makeRequest() {
             "X-CSRFToken": CSRF_TOKEN,
             "content-type": "application/json"
         },
-        url: '/get_product_data/' + queryParameters.getQueryString()
+        url: '/get_product_data/' + queryParameters.category + '/' + queryParameters.getQueryString()
     });
     return res.data.products;
 }
@@ -62,9 +65,6 @@ function addListeners() {
             refresh();
         })
     }
-
-    // TODO needs filtering by category (i think)
-
 }
 
 
@@ -94,19 +94,57 @@ function renderItems(itemArray){
 };
 
 function clearItems() {
-    const container = document.querySelector('#product-card-container');
-    container.innerHTML = '';
+    const cardContainer = document.querySelector('#product-card-container');
+    const searchContainer = document.querySelector('#product-search-bar');
+    cardContainer.innerHTML = '';
+    searchContainer.value = '';
 }
 
 async function refresh() {
-    console.log(queryParameters.getQueryString())
     let items = await makeRequest();
     renderItems(items);
 }
 
 
+function getAndSetCategory() {
+    const category = window.location.pathname.split('/').filter(el => el);
+    queryParameters.setCategory(category[1]);
+}
+
+async function getKeywords(){
+    const res = await axios({
+        method: "get",
+        headers: {
+            "X-CSRFToken": CSRF_TOKEN,
+            "content-type": "application/json"
+        },
+        url: '/keywords/'
+    });
+    return res.data.keywords;
+}
+
+function buildKeywordPanel(keywords) {
+    const container = document.querySelector('#keyword-container');
+    const parser = new DOMParser();
+    for(let i=0; i < keywords.length; i++) {
+        let keyword = keywords[i];
+        let text = `
+            <label class="form-check">
+                <input class="form-check-input keyword-by-button" name="${keyword}" type="checkbox" value="">
+                <span class="form-check-label">${keyword}</span>
+            </label>
+        `
+        let doc = parser.parseFromString(text, 'text/html');
+        container.appendChild(doc.body.firstChild);
+    }
+}
+
+
 
 async function main() {
-    refresh();
-    addListeners()
+    const keywords = await getKeywords();
+    buildKeywordPanel(keywords);
+
+    getAndSetCategory();
+    addListeners();
 }
