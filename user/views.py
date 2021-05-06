@@ -5,7 +5,11 @@ from .filters import ProductNameFilter, KeywordFilter, OrderFilter, CategoryFilt
 
 
 def index(request):
-    return render(request, 'user/index.html')
+    top_product_names = ["Cocoa Puffs", "Lucky Charms", "Reese's Puffs", "Fruity Pebbles"]
+    top_products = GetPhotoFilter.filter(Product.objects.filter(name__in=top_product_names))
+
+    context = {'top_products': top_products}
+    return render(request, 'user/index.html', context)
 
 
 def about_us_page(request):
