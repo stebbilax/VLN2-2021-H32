@@ -13,7 +13,8 @@ def index(request):
 
 
 def about_us_page(request):
-    return HttpResponse('About us')
+    context = {}
+    return render(request, 'user/about.html', context)
 
 
 def contact_us_page(request):
