@@ -8,12 +8,22 @@ class Account(models.Model):
     Has a one-to-one relationship with the User Model
      """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=300, default='John')
-    last_name = models.CharField(max_length=300, default='Doe')
+    first_name = models.CharField(max_length=300, default='')
+    last_name = models.CharField(max_length=300, default='')
+    email = models.CharField(max_length=300, default='')
     photo = models.ImageField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.id}: {self.first_name} {self.last_name}'
+
+    @property
+    def photo_url(self):
+        if self.photo:
+
+            print(self.photo)
+            return self.photo.url
+
+        return 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg'
 
 
 class PaymentInfo(models.Model):

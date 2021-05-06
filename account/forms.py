@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.forms import TextInput, FileInput
 from django.contrib.auth.models import User
+from .models import Account
 
 
 class CreateUserForm(UserCreationForm):
@@ -23,10 +25,18 @@ class LoginForm(forms.Form):
 
 
 class EditAccountForm(forms.ModelForm):
+
     class Meta:
-        model = User
+        model = Account
         fields = [
             'email',
             'first_name',
             'last_name',
+            'photo'
         ]
+        widgets = {
+            'email': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
+            'first_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
+            'last_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
+            'photo': FileInput()
+        }
