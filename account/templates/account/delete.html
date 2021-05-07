@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Account</title>
+
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    <p>{% trans "Are you sure you want to delete the account" %} {{ object.email }}?</p>
+    <a href="{% url 'delete_account' %}" class="col-md-4 offset-md-4 btn btn-outline-primary mt-2" id="delete-btn">Delete</a>
+</form>
+<br><p>(% trans "No, keep my account" %)</p>
+<a href="/" class="btn btn-outlin-primary">(% trans "Return to site" %)</a>
+</body>
+</html>

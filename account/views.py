@@ -1,7 +1,11 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 
 from .forms import CreateUserForm, LoginForm, EditAccountForm
 from .decorators import check_if_user_exists
@@ -63,6 +67,19 @@ def create_account(request):
     return render(request, 'account/create_user.html', context)
 
 
+@login_required(login_url='login')
+def delete_account(request):
+    context = {}
+    try:
+        the_account = Account.objects.get(user=request.user)
+        the_account.delete()
+        context['msg'] = 'The user is deleted.'
+    except User.DoesNotExist:
+        context['msg'] = 'User does not exist.'
+    except Exception as e:
+        context['msg'] = e.message
+
+    return render(request, 'template.html', context=context)
 
 
 
