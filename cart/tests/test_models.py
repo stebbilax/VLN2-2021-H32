@@ -17,17 +17,17 @@ class ModelTestCase(TestCase):
                                               price=30,
                                               category=self.category
                                               )
-        self.cartItem = CartItem.objects.create(cart=self.user.cart,
+        self.cartItem = CartItem.objects.create(cart=self.user.account.cart,
                                                 product=self.product)
 
     def tearDown(self):
         self.user.delete()
 
     def test_cart_exists(self):
-        self.assertIsNotNone(self.user.cart)
+        self.assertIsNotNone(self.user.account.cart)
 
     def test_item_is_in_users_cart(self):
-        items = CartItem.objects.filter(cart=self.user.cart)
+        items = CartItem.objects.filter(cart=self.user.account.cart)
         self.assertIsNotNone(items)
         item = items[0].product
         self.assertEqual(item.name, 'Cocoa Puffs')

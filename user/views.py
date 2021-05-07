@@ -58,7 +58,8 @@ def product_page(request, product):
         except TypeError:
             device = request.COOKIES['device']
             account, created = Account.objects.get_or_create(device=device)
-
+        print('----------------------Product Ran----------------------')
+        print(request.user, account)
         cart = Cart.objects.get(account=account)
         # Check if product is already in cart
         if product in [item.product for item in CartItem.objects.filter(cart=cart)]:

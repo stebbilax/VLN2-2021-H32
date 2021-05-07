@@ -8,7 +8,7 @@ class Account(models.Model):
     Account Model that represents the user profile if one is created
     Has a one-to-one relationship with the User Model
      """
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=300, default='')
     last_name = models.CharField(max_length=300, default='')
     email = models.CharField(max_length=300, default='')
