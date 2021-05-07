@@ -18,7 +18,8 @@ def about_us_page(request):
 
 
 def contact_us_page(request):
-    return HttpResponse('Contact us')
+    context = {}
+    return render(request, 'user/contact.html', context)
 
 
 def products_page(request, category):
