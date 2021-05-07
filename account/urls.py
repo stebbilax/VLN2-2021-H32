@@ -1,8 +1,7 @@
 from django.urls import path, reverse
 from django.contrib.auth import views as auth_views
 from .views import (account_page, login_page, logout_user,
-                    create_account, search_history_page)
-                    create_account, delete_account)
+                    create_account, search_history_page, delete_account)
 
 urlpatterns = [
     path('', account_page, name='account'),
