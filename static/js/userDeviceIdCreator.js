@@ -30,4 +30,4 @@ if (device === undefined || device === null){
     device = create_UUID();
 }
 
-document.cookie = 'device=' + device + ';domain=;path=/';
+document.cookie = 'device=' + device + ';domain=;path=/;SameSite=Lax';
