@@ -3,17 +3,12 @@ import json
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Cart, CartItem
-from .decorators import check_item_owner
+from .decorators import check_item_owner, collect_cart_info
 
+@collect_cart_info
+def cart_page(request, products, summary_data):
 
-def cart_page(request):
-    cart = Cart.objects.filter(user=request.user)
-    if cart:
-        cart = cart[0]
-        items = CartItem.objects.filter(cart=cart)
-        context = {'items': items}
-    else:
-        context = {'items': []}
+    context = {'items': products, 'summary': summary_data}
     return render(request, 'cart/cart_page.html', context)
 
 
