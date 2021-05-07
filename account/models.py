@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from user.models import Product
 
 
 class Account(models.Model):
@@ -12,6 +13,7 @@ class Account(models.Model):
     last_name = models.CharField(max_length=300, default='')
     email = models.CharField(max_length=300, default='')
     photo = models.ImageField(null=True, blank=True)
+    device = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return f'{self.id}: {self.first_name} {self.last_name}'
@@ -23,7 +25,7 @@ class Account(models.Model):
             print(self.photo)
             return self.photo.url
 
-        return 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg'
+        return 'https://ship-o-cereal-bucket.s3.amazonaws.com/default_4ShsN9O.jpg?AWSAccessKeyId=AKIARUQJJGSAX4RFXTUO&Signature=SP2SaciykV7FUhwr9OMTu1GO9es%3D&Expires=1620332994'
 
 
 class PaymentInfo(models.Model):
@@ -50,10 +52,10 @@ class SearchHistoryEntry(models.Model):
     Search History Entry Model Represents individual searches made by a user
     Has a many-to-one relationship with the Account Model
     """
-    account = models.OneToOneField(Account, on_delete=models.CASCADE)
-    url = models.CharField(max_length=500)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.url
+        return self.product.name
         
 

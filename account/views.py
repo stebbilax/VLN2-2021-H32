@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 from .forms import CreateUserForm, LoginForm, EditAccountForm
 from .decorators import check_if_user_exists
-from .models import Account
+from .models import Account, SearchHistoryEntry
 
 
 @login_required(login_url='login')
@@ -45,6 +45,13 @@ def login_page(request):
 
     context = {'form': form}
     return render(request, 'account/login.html', context)
+
+
+@login_required(login_url='login')
+def search_history_page(request):
+    search_history = SearchHistoryEntry.objects.filter(account=request.user.account)
+    context = {'search_history': search_history}
+    return render(request, 'account/search_history.html', context)
 
 
 @login_required(login_url='login')

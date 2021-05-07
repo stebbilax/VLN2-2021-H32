@@ -5,25 +5,69 @@
         const CSRF_TOKEN = '{{ csrf_token }}';
     </script>
 
-    <div class="container-fluid">
-        {% for item in items %}
-                <div class="row text-center bb">
-                    <div class="col-4">
-                        <p class="text-center">{{ item.product.name }}</p>
-                    </div>
-                    <div class="col-1">
-                        <button class="increment-button" name="{{ item.id }}" type="submit">+</button>
-                    </div>
-                    <div class="col-1">
-                        <p id="item-{{ item.id }}">{{ item.quantity }}</p>
-                    </div>o
-                    <div class="col-1">
-                        <button class="decrement-button" name="{{ item.id }}" type="submit">-</button>
-                    </div>
+<main class="container">
+    <div class="bg-white p-2 rounded">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="fs-2">Shopping cart</p>
+            </div>
+        </div>
 
+        <div class="row row-cols-1 row-cols-md-5 mt-2 g-4">
+            <div class="row row-cols-md-1 col-md-8 me-2" id="cart-product-card-container">
+                <!-- CARDS HERE // -->
+                {% for item in items %}
+                <div class="shadow-sm card mb-3 p-2">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="{{ item.img }}" alt="..." style="max-width: auto; max-height: 200px;">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title mb-4">{{ item.name }}</h5>
+                          <p class="card-text mb-4">Quantity: {{ item.quantity }}</p>
+                          <p class="card-text mb-3">Total: ${{ item.total }}</p>
+                        </div>
+                        <div class="card-footer-white ms-3 mb-2">
+                            <a href="#" class="btn btn-outline-danger">Remove</a>
+                        </div>
+                      </div>
+                    </div>
                 </div>
-        {% endfor %}
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{% static 'js/update_product_quantity.js' %}"></script>
+                {% endfor %}
+            <!-- CARDS END // -->
+            </div>
+            <div class="card col-md-4 mb-0 mt-0" style="max-height: 800px;">
+                <div class="card-header bg-transparent border-warning fs-4 fw-bold">ORDER SUMMARY</div>
+                <div class="card-body">
+                    <div class="card bg-light p-2">
+                        <p class="card-text mb-2 mt-2 fs-4">{{ summary.number_of_products }} Product(s)</p>
+                        <div class="card-header bg-transparent border-warning"></div>
+                        <p class="card-text mb-2 mt-2 fs-4">Delivery: FREE</p>
+                        <div class="card-header bg-transparent border-warning"></div>
+                        <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: ${{ summary.total }}</p>
+                    </div>
+                    <p class="card-text mt-3">
+                        <small class="text-muted">
+                            Lucky you!
+                            In the month of May, we are offering free delivery on all of our products.
+                            Enjoy your delicious cereal free of worries!
+                        </small>
+                    </p>
+                </div> <!-- card-body.// -->
+                <div class="card-footer-white text-center mb-2">
+                    <a href="../checkout/checkout.html" class="btn btn-primary">
+                        Go to checkout
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div> <!-- card.// -->
+        </div>
     </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/update_product_quantity.js' %}"></script>
+</div>
 {% endblock %}

@@ -1,0 +1,7 @@
+{% include 'base.html' %}
+{% block content %}
+    {% for item in search_history %}
+        <a href="{% url 'product'  item.product.id%}">{{ item.product.name }}</a>
+    {% endfor %}
+
+{% endblock %}
