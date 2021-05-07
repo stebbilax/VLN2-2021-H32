@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, get_object_or_404
+
+from .decorators import record_search_history
 from .models import Product, ProductPhoto, Category, Keyword
 from .filters import ProductNameFilter, KeywordFilter, OrderFilter, CategoryFilter, GetPhotoFilter
 
@@ -38,8 +40,8 @@ def products_page(request, category):
     return render(request, 'user/products.html', context)
 
 
-def product_page(request, id):
-    product = get_object_or_404(Product, pk=id)
+@record_search_history
+def product_page(request, product):
     pictures = ProductPhoto.objects.filter(product=product)
     main_picture = pictures[0]
     pictures = pictures[1:]

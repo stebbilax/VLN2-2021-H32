@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.templatetags.static import static
+from user.models import Product
 
 
 class Account(models.Model):
@@ -51,10 +51,10 @@ class SearchHistoryEntry(models.Model):
     Search History Entry Model Represents individual searches made by a user
     Has a many-to-one relationship with the Account Model
     """
-    account = models.OneToOneField(Account, on_delete=models.CASCADE)
-    url = models.CharField(max_length=500)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.url
+        return self.product.name
         
 
