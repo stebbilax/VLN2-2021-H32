@@ -17,6 +17,6 @@ urlpatterns = [
         template_name='password/password_reset_done.html'), name='password_reset_complete'),
     path('reset_password/', auth_views.PasswordResetView.as_view(
         template_name='password/password_reset.html'), name='reset_password'),
-    path('<int:pk>/delete/', delete_account, name='account_delete')
+    path('delete/', delete_account, name='account_delete')
 ]
 

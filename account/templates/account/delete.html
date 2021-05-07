@@ -8,10 +8,10 @@
 <body>
 <form method="post">
     {% csrf_token %}
-    <p>{% trans "Are you sure you want to delete the account" %} {{ object.email }}?</p>
-    <a href="{% url 'delete_account' %}" class="col-md-4 offset-md-4 btn btn-outline-primary mt-2" id="delete-btn">Delete</a>
+    <p> Are you sure you want to delete the account?</p>
+    <button type="submit" class="col-md-4 offset-md-4 btn btn-outline-primary mt-2" id="delete-btn">Delete</button>
 </form>
-<br><p>(% trans "No, keep my account" %)</p>
-<a href="/" class="btn btn-outlin-primary">(% trans "Return to site" %)</a>
+<br><p></p>
+    <a href="{% url 'home' %}" class="col-md-4 offset-md-4 btn btn-outline-primary mt-2" id="delete-btn">No, keep my account</a>
 </body>
 </html>
