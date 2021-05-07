@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from .models import Product, ProductPhoto, Category, Keyword
 from .filters import ProductNameFilter, KeywordFilter, OrderFilter, CategoryFilter, GetPhotoFilter
 
@@ -35,6 +35,16 @@ def products_page(request, category):
 
     context = {'products': product_list, 'product_filter': product_filter}
     return render(request, 'user/products.html', context)
+
+
+def product_page(request, id):
+    product = get_object_or_404(Product, pk=id)
+    pictures = ProductPhoto.objects.filter(product=product)
+    main_picture = pictures[0]
+    pictures = pictures[1:]
+
+    context = {'product': product, 'pictures': pictures, 'main_picture': main_picture}
+    return render(request, 'user/product.html', context)
 
 
 def get_product_data(request, category):

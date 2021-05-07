@@ -91,7 +91,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{product.name }}</h5>
                                 <p class="card-text">Price: {{product.price}}</p>
-                                <a href="../product/product.html" class="stretched-link"></a>
+                                <a href="{% url 'product' product.id %}" class="stretched-link"></a>
                                 <a href="../cart/cart.html" class="btn btn-primary">Add to cart</a>
                             </div>
                         </div>
