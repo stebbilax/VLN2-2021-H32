@@ -23,10 +23,17 @@
                     <p class="fs-4">${{ product.price }}</p>
                 </div>
                 <div class="row">
-                    <button type="button" class="col-md-5 offset-md-4 btn btn-primary mt-5" id="add-to-cart-btn">Add to cart</button>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="col-md-5 offset-md-4 btn btn-primary mt-5" id="add-to-cart-btn">Add to cart</button>
+                    </form>
                 </div>
             </div>
         </div>
+        {% for message in messages %}
+            <p id="messages">{{message}}</p>
+        {% endfor %}
     </div>
+
 </main>
 {% endblock %}

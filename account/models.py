@@ -13,6 +13,7 @@ class Account(models.Model):
     last_name = models.CharField(max_length=300, default='')
     email = models.CharField(max_length=300, default='')
     photo = models.ImageField(null=True, blank=True)
+    device = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return f'{self.id}: {self.first_name} {self.last_name}'
