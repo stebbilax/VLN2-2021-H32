@@ -2,16 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from user.models import Product
+from account.models import Account
 
 
 class Cart(models.Model):
     """
     Cart Model is a layer of abstraction between the user and his select items
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    account = models.OneToOneField(Account, on_delete=models.CASCADE,
+                                   null=True)
 
     def __str__(self):
-        return f"{self.user}'s Cart"
+        return f"{self.account.id}'s Cart"
 
 
 class CartItem(models.Model):
