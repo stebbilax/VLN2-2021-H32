@@ -22,7 +22,7 @@ class ChangeQuantityTestCase(TestCase):
                                               price=30,
                                               category=self.category
                                               )
-        self.cartItem = CartItem.objects.create(cart=self.user.cart,
+        self.cartItem = CartItem.objects.create(cart=self.user.account.cart,
                                                 product=self.product)
         self.factory = RequestFactory()
 
@@ -30,7 +30,7 @@ class ChangeQuantityTestCase(TestCase):
         self.user.delete()
 
     def test_cart_exists(self):
-        self.assertIsNotNone(self.user.cart)
+        self.assertIsNotNone(self.user.account.cart)
 
     def test_default_quantity(self):
         """ Default quantity should be one """

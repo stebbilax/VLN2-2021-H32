@@ -12,7 +12,7 @@ def check_item_owner(view_func):
     def wrapper(request, *args, **kwargs):
         item_id = args[0]
         item = CartItem.objects.get(id=item_id)
-        if item.cart.user != request.user:
+        if item.cart.account.user != request.user:
             return HttpResponseBadRequest()
 
         return view_func(request, *args, **kwargs)
