@@ -76,17 +76,13 @@ def create_account(request):
 
 @login_required(login_url='login')
 def delete_account(request):
-    context = {}
-    try:
-        the_account = Account.objects.get(user=request.user)
-        the_account.delete()
-        context['msg'] = 'The user is deleted.'
-    except User.DoesNotExist:
-        context['msg'] = 'User does not exist.'
-    except Exception as e:
-        context['msg'] = e.message
-
-    return render(request, 'template.html', context=context)
+    if request.method == 'POST':
+        if not request.user.has_perm('auth.view_user'):
+            the_account = Account.objects.get(user=request.user)
+            the_account.delete()
+            request.user.delete()
+            return redirect('logout')
+    return render(request, 'account/delete.html')
 
 
 

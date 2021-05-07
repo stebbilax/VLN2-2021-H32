@@ -1,8 +1,7 @@
 from django.urls import path, reverse
 from django.contrib.auth import views as auth_views
 from .views import (account_page, login_page, logout_user,
-                    create_account, search_history_page)
-                    create_account, delete_account)
+                    create_account, search_history_page, delete_account)
 
 urlpatterns = [
     path('', account_page, name='account'),
@@ -18,6 +17,6 @@ urlpatterns = [
         template_name='password/password_reset_done.html'), name='password_reset_complete'),
     path('reset_password/', auth_views.PasswordResetView.as_view(
         template_name='password/password_reset.html'), name='reset_password'),
-    path('<int:pk>/delete/', delete_account, name='account_delete')
+    path('delete/', delete_account, name='account_delete')
 ]
 
