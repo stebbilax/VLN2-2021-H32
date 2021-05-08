@@ -40,3 +40,6 @@ class EditAccountForm(forms.ModelForm):
             'last_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'photo': FileInput()
         }
+
+
+
