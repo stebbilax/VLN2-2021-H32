@@ -5,6 +5,9 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import Cart, CartItem
 from .decorators import check_item_owner, collect_cart_info
 
+from account.models import Account
+
+
 @collect_cart_info
 def cart_page(request, products, summary_data):
 
@@ -52,3 +55,14 @@ def decrease_quantity(request, item_id):
                 return HttpResponse({item.quantity})
         else:
             return HttpResponseBadRequest()
+
+
+def get_item_count(request):
+    try:
+        cart = request.user.account.cart
+    except AttributeError:
+        device = request.COOKIES['device']
+        account, created = Account.objects.get_or_create(device=device)
+        cart = account.cart
+
+    return JsonResponse({'data': cart.cartitem_set.all().count()})

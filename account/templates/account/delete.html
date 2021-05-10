@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Account</title>
+
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    <p> Are you sure you want to delete the account?</p>
+    <button type="submit" class="col-md-4 offset-md-4 btn btn-outline-primary mt-2" id="delete-btn">Delete</button>
+</form>
+<br><p></p>
+    <a href="{% url 'home' %}" class="col-md-4 offset-md-4 btn btn-outline-primary mt-2" id="delete-btn">No, keep my account</a>
+</body>
+</html>
