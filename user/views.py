@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+from django.core.paginator import Paginator
 
 from .decorators import record_search_history
 from .models import Product, ProductPhoto, Category, Keyword
@@ -38,6 +39,9 @@ def products_page(request, category):
 
     # Add photos
     product_list = GetPhotoFilter.filter(products)
+    paginator = Paginator(product_list, 8)
+    page_number = request.GET.get('page')
+    product_list = paginator.get_page(page_number)
 
     context = {'products': product_list, 'product_filter': product_filter}
     return render(request, 'user/products.html', context)
@@ -48,7 +52,6 @@ def product_page(request, product):
     pictures = ProductPhoto.objects.filter(product=product)
     main_picture = pictures[0]
     pictures = pictures[1:]
-
     if request.method == 'POST':
         # Check if user is logged in
         try:
@@ -58,8 +61,7 @@ def product_page(request, product):
         except TypeError:
             device = request.COOKIES['device']
             account, created = Account.objects.get_or_create(device=device)
-        print('----------------------Product Ran----------------------')
-        print(request.user, account)
+
         cart = Cart.objects.get(account=account)
         # Check if product is already in cart
         if product in [item.product for item in CartItem.objects.filter(cart=cart)]:
@@ -73,6 +75,7 @@ def product_page(request, product):
         return redirect('products', 'cereal')
 
     context = {'product': product, 'pictures': pictures, 'main_picture': main_picture}
+
     return render(request, 'user/product.html', context)
 
 
