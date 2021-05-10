@@ -1,16 +1,19 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
 
-<div class="page-wrap d-flex flex-row align-items-center">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                <span class="display-1 d-block">404</span>
-                <div class="mb-4 lead">Oops! The page you are looking for was not found.</div>
-                <a href={% url 'home' %} class="btn btn-link">Back to Home</a>
-            </div>
+<main class="container">
+    <div class="bg-white p-2 rounded text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-code-slash mt-3" viewBox="0 0 16 16">
+            <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
+        </svg>
+        <div class="row">
+            <div class="text fs-1 mt-3">404</div>
+            <div class="text fs-4 mt-4">Oops! The page you are looking for was not found.</div>
+            <a href={% url 'home' %} class="btn btn-link">Back to Home</a>
         </div>
     </div>
-</div>
+</main>
+
+{% endblock %}
