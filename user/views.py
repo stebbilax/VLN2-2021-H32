@@ -21,6 +21,10 @@ def about_us_page(request):
     context = {}
     return render(request, 'user/about.html', context)
 
+def four_page(request):
+    context = {}
+    return render(request, 'user/404.html', context)
+
 
 def contact_us_page(request):
     context = {}
