@@ -29,7 +29,7 @@
                           <p class="card-text mb-3">Total: ${{ item.total }}</p>
                         </div>
                         <div class="card-footer-white ms-3 mb-2">
-                            <a href="#" class="btn btn-outline-danger">Remove</a>
+                            <a href="{% url 'remove_item' item.id %}" class="btn btn-outline-danger">Remove</a>
                         </div>
                       </div>
                     </div>

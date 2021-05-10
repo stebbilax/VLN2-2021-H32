@@ -66,3 +66,11 @@ def get_item_count(request):
         cart = account.cart
 
     return JsonResponse({'data': cart.cartitem_set.all().count()})
+
+@check_item_owner
+def remove_item(request, item_id):
+    item = CartItem.objects.get(id=item_id)
+    if item:
+        item.delete()
+    return redirect("cart")
+

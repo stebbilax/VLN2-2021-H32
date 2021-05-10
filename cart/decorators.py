@@ -36,7 +36,8 @@ def collect_cart_info(view_func):
 
         cart_items = cart.cartitem_set.all()
         for item in cart_items:
-            products.append({"name": item.product.name,
+            products.append({"id": item.id,
+                            "name": item.product.name,
                              "price": item.product.price,
                              "quantity": item.quantity,
                              "total": item.product.price * item.quantity,
