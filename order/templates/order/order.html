@@ -10,7 +10,8 @@
                     <p class="fs-2">Enter contact information</p>
                 </div>
             </div>
-
+            <form method="POST">
+                {% csrf_token %}
             <div class="row row-cols-1 row-cols-md-5 mt-2 g-4">
                 <div class="row row-cols-md-1 col-md-8 me-2" id="contact-info-container">
                     <div class="shadow-sm card mb-3 p-2">
@@ -66,11 +67,11 @@
                     <div class="card-header bg-transparent border-warning fs-4 fw-bold">ORDER SUMMARY</div>
                     <div class="card-body">
                         <div class="card bg-light p-2">
-                            <p class="card-text mb-2 mt-2 fs-4">3 Product(s)</p>
+                            <p class="card-text mb-2 mt-2 fs-4">{{ cart_info.count }} Product(s)</p>
                             <div class="card-header bg-transparent border-warning"></div>
                             <p class="card-text mb-2 mt-2 fs-4">Delivery: FREE</p>
                             <div class="card-header bg-transparent border-warning"></div>
-                            <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: $30.98</p>
+                            <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: ${{ cart_info.price }}</p>
                         </div>
                         <p class="card-text mt-3">
                             <small class="text-muted">
@@ -108,7 +109,8 @@
                         <div class="row col-md-10 offset-md-1 fw-bold">
                             <label for="inputExpDate" class="form-label">Expiration date</label>
 {#                            <input type="text" id="inputExpDate" class="form-control form-control-lg mb-4" placeholder="Enter the expiration date of the card in 'MM/YYYY' format">#}
-                            {{ form.expiration_date }}
+                            {{ form.expiration_year}}
+                            {{ form.expiration_month}}
                         </div>
                         <div class="row col-md-10 offset-md-1 fw-bold">
                             <label for="inputCvc" class="form-label col-md-6 fw-bold">CVC</label>
@@ -148,11 +150,11 @@
                     <div class="card-header bg-transparent border-warning fs-4 fw-bold">ORDER SUMMARY</div>
                     <div class="card-body">
                         <div class="card bg-light p-2">
-                            <p class="card-text mb-2 mt-2 fs-4">3 Product(s)</p>
+                            <p class="card-text mb-2 mt-2 fs-4">{{ cart_info.count }} Product(s)</p>
                             <div class="card-header bg-transparent border-warning"></div>
                             <p class="card-text mb-2 mt-2 fs-4">Delivery: FREE</p>
                             <div class="card-header bg-transparent border-warning"></div>
-                            <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: $30.98</p>
+                            <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: ${{ cart_info.price }}</p>
                         </div>
                         <p class="card-text mt-3">
                             <small class="text-muted">
@@ -189,7 +191,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="inputPostal" class="form-label fw-bold">House Number</label>
-                                <input type="text" id="streetName-readonly-1" readonly class="form-control form-control-lg mb-4" value="38">
+                                <input type="text" id="houseNr-readonly" readonly class="form-control form-control-lg mb-4" value="38">
                             </div>
                         </div>
                         <div class="row col-md-10 offset-md-1 fw-bold">
@@ -225,15 +227,16 @@
                             <label for="cvc-readonly" class="form-label fw-bold ms-3">CVC</label>
                             <input type="text" id="cvc-readonly" readonly class="form-control form-control-lg mb-4" value="201">
                         </div>
-                        <div class="row col-md-10 offset-md-1 mb-4 mt-4">
-                            <a href="../checkout/checkout-confirmation.html" class="btn btn-primary btn-lg">
-                                Place Order
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle ms-2 mb-1" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                                </svg>
-                            </a>
-                        </div>
+                            <div class="row col-md-10 offset-md-1 mb-4 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    Place Order
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle ms-2 mb-1" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                     <div class="row p-0 ms-1">
                         <div class="col-md-4 mb-4 mt-4 p-0">
@@ -258,11 +261,11 @@
                     <div class="card-header bg-transparent border-warning fs-4 fw-bold">ORDER SUMMARY</div>
                     <div class="card-body">
                         <div class="card bg-light p-2">
-                            <p class="card-text mb-2 mt-2 fs-4">3 Product(s)</p>
+                            <p class="card-text mb-2 mt-2 fs-4">{{ cart_info.count }} Product(s)</p>
                             <div class="card-header bg-transparent border-warning"></div>
                             <p class="card-text mb-2 mt-2 fs-4">Delivery: FREE</p>
                             <div class="card-header bg-transparent border-warning"></div>
-                            <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: $30.98</p>
+                            <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: ${{ cart_info.price }}</p>
                         </div>
                         <p class="card-text mt-3">
                             <small class="text-muted">

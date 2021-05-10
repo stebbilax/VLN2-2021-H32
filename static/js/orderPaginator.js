@@ -14,13 +14,24 @@ function makeFormObject() {
         country: document.getElementById('id_country').value,
         name_of_cardholder: document.getElementById('order-form-name_of_cardholder').value,
         card_number: document.getElementById('order-form-card_number').value,
-        // expiration_date: document.getElementById('order-form-expiration_date').value,
+        expiration_year: document.getElementById('order-form-expiration_year').value,
+        expiration_month: document.getElementById('order-form-expiration_month').value,
         cvc: document.getElementById('order-form-cvc').value
     }
 }
 
 function insertSummary(obj) {
     document.getElementById('name-readonly').value = obj.name;
+    document.getElementById('streetName-readonly').value = obj.street_name;
+    document.getElementById('houseNr-readonly').value = obj.house_number;
+    document.getElementById('city-readonly').value = obj.city;
+    document.getElementById('country-readonly').value = obj.country;
+    document.getElementById('postal-readonly').value = obj.postal_code;
+    document.getElementById('carholderName-readonly').value = obj.name_of_cardholder;
+    document.getElementById('cardNr-readonly').value = obj.card_number;
+    document.getElementById('expDate-readonly').value = obj.expiration_month + '/' + obj.expiration_year;
+    document.getElementById('cvc-readonly').value = obj.cvc;
+
 }
 
 

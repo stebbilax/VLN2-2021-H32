@@ -35,7 +35,12 @@ class PaymentInfoForm(forms.Form):
                                   widget=forms.TextInput({'class': 'form-control form-control-lg mb-4',
                                                           'placeholder': 'Enter the card number',
                                                           'id': 'order-form-card_number'}))
-    expiration_date = forms.DateField(widget=forms.SelectDateWidget())
+    expiration_year = forms.IntegerField(widget=forms.NumberInput({'class': 'form-control form-control-lg mb-4',
+                                                                   'placeholder': 'Year',
+                                                                   'id': 'order-form-expiration_year'}))
+    expiration_month = forms.IntegerField(widget=forms.NumberInput({'class': 'form-control form-control-lg mb-4',
+                                                                   'placeholder': 'Month',
+                                                                    'id': 'order-form-expiration_month'}))
     cvc = forms.IntegerField(widget=forms.TextInput({'class': 'form-control form-control-lg mb-4',
                                                      'placeholder': 'Enter the CVC number',
                                                      'id': 'order-form-cvc'}))
