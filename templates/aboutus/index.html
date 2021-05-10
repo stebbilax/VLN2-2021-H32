@@ -19,17 +19,20 @@
 
 </div>
 
+
 <h2 style="text-align:center">Our Team</h2>
 <div class="row">
   <div class="column">
     <div class="card">
       <img src="{% static 'images/employee.jpeg' %}" alt="Arnar"  style="max-width: 130px;">
       <div class="container">
+
         <h2>Arnar Már Kristinsson</h2>
         <p class="title">CEO </p>
         <p>Chief Executive Officer</p>
         <p>arnar@shipocereal.com</p>
-        <p><button class="button">Contact</button></p>
+          <p><button class="button" onclick=href="{% url 'contact' %}">Contact</button></p>
+
       </div>
     </div>
   </div>
