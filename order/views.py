@@ -1,11 +1,15 @@
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponse
-from django import forms
+from django.core.paginator import Paginator
+from .forms import PaymentInfoForm
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'order/index.html')
+    payment_form = PaymentInfoForm()
+
+    context = {'form': payment_form }
+    return render(request, 'order/order.html', context)
 
 
 def place_order(request):
