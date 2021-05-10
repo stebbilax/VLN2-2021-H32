@@ -26,6 +26,10 @@ def four_page(request):
     context = {}
     return render(request, 'user/404.html', context)
 
+def page_not_found(request):
+    context = {}
+    return render(request, 'user/pagenotfound.html', context)
+
 
 def contact_us_page(request):
     context = {}
