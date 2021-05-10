@@ -5,3 +5,4 @@ pillow
 django-storages
 boto3
 django-filter
+django-countries
