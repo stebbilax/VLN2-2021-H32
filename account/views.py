@@ -69,6 +69,20 @@ def create_account(request):
         if form.is_valid():
             form.save()
             return redirect('login')
+        else:
+            password1 = form.data['password1']
+            password2 = form.data['password2']
+            email = form.data['email']
+            for msg in form.errors.as_data():
+                if msg == 'email':
+                    messages.error(request, f"Declared {email} is not valid")
+                    print(msg)
+                if msg == 'password2' and password1 == password2:
+                    messages.error(request, f"Selected password is not strong enough, please try again.")
+                    print(msg)
+                elif msg == 'password2' and password1 != password2:
+                    messages.error(request, f"Password and Password Confirmation do not match, please try again.")
+                    print(msg)
 
     context = {"form": form}
     return render(request, 'account/create_user.html', context)
