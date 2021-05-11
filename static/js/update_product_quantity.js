@@ -1,8 +1,7 @@
 
 
-window.onload = (event) => {
-  addEventListeners();
-};
+
+
 
 
 function addEventListeners() {
@@ -11,7 +10,7 @@ function addEventListeners() {
 
     incrementButtons.forEach(btn => btn.addEventListener('click', e => {
         try{
-            increment(e.target.name);
+            increment(e.target.getAttribute('name'));
         } catch (error) {
             console.error(error);
         }
@@ -19,7 +18,7 @@ function addEventListeners() {
 
     decrementButtons.forEach(btn => btn.addEventListener('click', e => {
         try{
-            decrement(e.target.name);
+            decrement(e.target.getAttribute('name'));
         } catch (error) {
             console.error(error);
         }
@@ -37,6 +36,7 @@ async function increment(itemId){
         url: '/cart/increase_quantity/' + itemId.toString()
     });
     if(res.status == 200){
+
         const quantity = res.data;
         updateQuantity(itemId, quantity);
     }
@@ -63,14 +63,33 @@ async function decrement(itemId){
 // Updates quantity if not 0. Removes element if quantity is 0
 function updateQuantity(itemId, quantity){
     const item = document.querySelector(`#item-${itemId}`);
+    const card = document.querySelector(`#card-${itemId}`);
     if (item){
         if(quantity === 0){
-            item.parentElement.parentElement.remove();
+            card.remove();
         } else {
             item.innerHTML = quantity;
         }
     }
+    getSummaryInfo();
 }
+
+
+async function getSummaryInfo(){
+    const res = await axios({
+        method: "post",
+        headers: {
+            "X-CSRFToken": CSRF_TOKEN,
+            "content-type": "application/json"
+        },
+        url: '/cart/get_summary_info/'
+    });
+    console.log(res.data)
+    document.getElementById('summary-total').innerHTML = '$' + res.data.summary.total;
+}
+
+
+addEventListeners();
 
 
 

@@ -14,6 +14,10 @@ def cart_page(request, products, summary_data):
     context = {'items': products, 'summary': summary_data}
     return render(request, 'cart/cart_page.html', context)
 
+@collect_cart_info
+def get_summary_info(request, products, summary_data):
+    return JsonResponse({'summary': summary_data})
+
 
 @check_item_owner
 def increase_quantity(request, item_id):

@@ -9,13 +9,19 @@ from user.filters import GetPhotoFilter
 def check_item_owner(view_func):
     """ Prevents a user from modifying another users cart items """
 
-    def wrapper(request, *args, **kwargs):
-        item_id = args[0]
+    def wrapper(request, item_id, *args, **kwargs):
+        try:
+            account = get_object_or_404(Account, user=request.user)
+
+        except TypeError:
+            device = request.COOKIES['device']
+            account, created = Account.objects.get_or_create(device=device)
+
         item = CartItem.objects.get(id=item_id)
-        if item.cart.account.user != request.user:
+        if item.cart.account != account:
             return HttpResponseBadRequest()
 
-        return view_func(request, *args, **kwargs)
+        return view_func(request, item_id, *args, **kwargs)
 
     return wrapper
 
