@@ -3,12 +3,33 @@ from django.http import HttpResponse
 
 from .forms import PaymentInfoForm
 from .decorators import make_order
-from account.models import Account
+from account.models import Account, PaymentInfo
 
 
 @make_order
 def index(request):
-    payment_form = PaymentInfoForm()
+    try:
+        account = get_object_or_404(Account, user=request.user)
+
+    # If not get or create an account with the users device uuid
+    except TypeError:
+        device = request.COOKIES['device']
+        account, created = Account.objects.get_or_create(device=device)
+
+    if hasattr(account, 'paymentinfo'):
+        info = PaymentInfo.objects.filter(account=account)[0]
+        initial_info_obj = {
+            'name': info.name_of_cardholder,
+            'street_name': info.street_name,
+            'house_number': info.house_number,
+            'city': info.city,
+            'postal_code': info.postal_code,
+            'name_of_cardholder': info.name_of_cardholder,
+            'card_number': info.card_number,
+        }
+        payment_form = PaymentInfoForm(initial=initial_info_obj)
+    else:
+        payment_form = PaymentInfoForm()
     try:
         account = get_object_or_404(Account, user=request.user)
 
