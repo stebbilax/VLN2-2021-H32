@@ -2,12 +2,14 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
 
 from .decorators import record_search_history
 from .models import Product, ProductPhoto, Category, Keyword
 from account.models import Account
 from cart.models import Cart, CartItem
 from .filters import ProductNameFilter, KeywordFilter, OrderFilter, CategoryFilter, GetPhotoFilter
+from .forms import ContactEmailForm
 
 
 def index(request):
@@ -22,9 +24,11 @@ def about_us_page(request):
     context = {}
     return render(request, 'user/about.html', context)
 
+
 def four_page(request):
     context = {}
     return render(request, 'user/404.html', context)
+
 
 def page_not_found(request):
     context = {}
@@ -32,7 +36,20 @@ def page_not_found(request):
 
 
 def contact_us_page(request):
-    context = {}
+    form = ContactEmailForm()
+    if request.method == 'POST':
+        form = ContactEmailForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            send_mail(
+                data['name'],
+                data['message'],
+                data['email'],
+                ['shipocereal@gmail.com'],
+                fail_silently=False,
+            )
+        return redirect('home')
+    context = {'form': form}
     return render(request, 'user/contact.html', context)
 
 
