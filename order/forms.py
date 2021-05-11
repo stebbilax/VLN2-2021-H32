@@ -44,7 +44,10 @@ class PaymentInfoForm(forms.Form):
     cvc = forms.IntegerField(widget=forms.TextInput({'class': 'form-control form-control-lg mb-4',
                                                      'placeholder': 'Enter the CVC number',
                                                      'id': 'order-form-cvc'}))
-    save_info = forms.BooleanField(required=False)
+    save_info = forms.BooleanField(required=False,
+                                    widget=forms.CheckboxInput({'class': 'form-check-input ms-0',
+                                                                'type': 'checkbox',
+                                                                'value': ''}))
 
     def clean_expiration_year(self):
         expiration_year = self.cleaned_data.get("expiration_year")
