@@ -25,16 +25,6 @@ def about_us_page(request):
     return render(request, 'user/about.html', context)
 
 
-def four_page(request):
-    context = {}
-    return render(request, 'user/404.html', context)
-
-
-def page_not_found(request):
-    context = {}
-    return render(request, 'user/pagenotfound.html', context)
-
-
 def contact_us_page(request):
     form = ContactEmailForm()
     if request.method == 'POST':
