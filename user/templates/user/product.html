@@ -1,17 +1,45 @@
-{% include 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 {% load static %}
 <main class="container">
     <div class="bg-white p-2 rounded">
         <div class="row">
             <div class="col-md-6 mt-4">
-                <img src="{{ main_picture.photo.url }}" alt="Product" class="col-md-7 img-fluid mb-4" style="width: auto; min-height:400px; max-height: 400px;">
-                <div class="row col-md-10">
-                {% for pic in pictures %}
-                    <a href="#" class="text-decoration-none col-md-3 p-0" id="altPic1">
+                <div id="productCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        {% for pic in pictures %}
+                        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="{{forloop.counter}}" aria-label="Slide {{forloop.counter}}"></button>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="10000">
+                            <img src="{{ main_picture.photo.url }}" class="d-block w-100" alt="Product">
+                        </div>
+                        {% for pic in pictures %}
+                        <div class="carousel-item" data-bs-interval="10000">
+                            <img src="{{ pic.photo.url }}" class="d-block w-100" alt="Product">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    </div>
+                <div class="row col-md-10 offset-md-1 mt-4">
+                    <a href="#" class="text-decoration-none col-md-3 p-0" data-bs-target="#productCarousel" data-bs-slide-to="0" id="altPic1">
+                        <img src="{{ main_picture.photo.url }}" alt="Product" class="img-fluid" style="width: auto; min-height:100px; max-height: 100px;">
+                    </a>
+                    {% for pic in pictures %}
+                    <a href="#" class="text-decoration-none col-md-3 p-0" data-bs-target="#productCarousel" data-bs-slide-to="1" id="altPic1">
                         <img src="{{ pic.photo.url }}" alt="Product" class="img-fluid" style="width: auto; min-height:100px; max-height: 100px;">
                     </a>
-                {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-md-6 mt-4">
