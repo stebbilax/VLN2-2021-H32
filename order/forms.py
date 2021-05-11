@@ -44,4 +44,4 @@ class PaymentInfoForm(forms.Form):
     cvc = forms.IntegerField(widget=forms.TextInput({'class': 'form-control form-control-lg mb-4',
                                                      'placeholder': 'Enter the CVC number',
                                                      'id': 'order-form-cvc'}))
-    save_info = forms.BooleanField()
+    save_info = forms.BooleanField(required=False)
