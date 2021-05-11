@@ -1,6 +1,4 @@
-window.onload = (event) => {
-  main();
-};
+
 
 // Keeps track of all query parameters currently in use
 const queryParameters = {
@@ -81,7 +79,7 @@ function renderItems(itemArray){
                     <img src="${product.img}" class="card-img-top mx-auto" alt="..." style="width: auto; max-height: 150px">
                     <div class="card-body">
                     <h5 class="card-title">${product.name }</h5>
-                    <p class="card-text">Price: ${product.price}</p>
+                    <p class="card-text">Price: ${product.price} </p>
                     <a href="../product/product.html" class="stretched-link"></a>
                     <a href="../cart/cart.html" class="btn btn-primary">Add to cart</a>
                     </div>
@@ -149,3 +147,4 @@ async function main() {
     addListeners();
 }
 
+main();
