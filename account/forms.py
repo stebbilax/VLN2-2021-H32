@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordResetForm
 from django import forms
 from django.forms import TextInput, FileInput
 from django.contrib.auth.models import User
@@ -40,6 +41,17 @@ class EditAccountForm(forms.ModelForm):
             'last_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'photo': FileInput()
         }
+
+class UserPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
+
+    email = forms.EmailField(label='', widget=forms.EmailInput(attrs={
+        'class': 'form-control form-control-lg mb-3',
+        'placeholder': 'Email',
+        'type': 'email',
+        'name': 'email'
+        }))
 
 
 
