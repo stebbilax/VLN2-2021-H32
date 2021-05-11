@@ -1,7 +1,7 @@
 import json
 
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .models import Cart, CartItem
 from .decorators import check_item_owner, collect_cart_info
 
@@ -67,10 +67,19 @@ def get_item_count(request):
 
     return JsonResponse({'data': cart.cartitem_set.all().count()})
 
-@check_item_owner
+
 def remove_item(request, item_id):
     item = CartItem.objects.get(id=item_id)
+
+    try:
+        account = get_object_or_404(Account, user=request.user)
+
+    except TypeError:
+        device = request.COOKIES['device']
+        account, created = Account.objects.get_or_create(device=device)
+
     if item:
-        item.delete()
+        if item.cart.account == account:
+            item.delete()
     return redirect("cart")
 
