@@ -45,3 +45,5 @@ class PaymentInfoForm(forms.Form):
                                                      'placeholder': 'Enter the CVC number',
                                                      'id': 'order-form-cvc'}))
     save_info = forms.BooleanField(required=False)
+
+

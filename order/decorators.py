@@ -5,6 +5,7 @@ from .forms import PaymentInfoForm
 from order.models import Order, OrderContains
 from account.models import PaymentInfo, Account
 
+
 def make_order(view_func):
     def wrapper(request, *args, **kwargs):
         if request.method == 'POST':
@@ -56,9 +57,9 @@ def make_order(view_func):
 
 
             else:
-                # Add messages here
-                print('not valid')
                 print(form.errors)
+                for error in form.errors:
+                    print(error)
 
         return view_func(request, *args, **kwargs)
     return wrapper
