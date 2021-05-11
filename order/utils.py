@@ -1,0 +1,56 @@
+from django.core.mail import send_mail
+
+from order.models import Order, OrderContains
+from account.models import PaymentInfo
+
+
+def create_order(cart_items, user, data):
+    total_price = 0
+    for item in cart_items:
+        total_price += item.product.price
+    order = Order.objects.create(
+        user=user,
+        total_price=total_price,
+        street_name=data['street_name'],
+        house_number=data['house_number'],
+        city=data['city'],
+        postal_code=data['postal_code']
+    )
+    for item in cart_items:
+        order_contains = OrderContains.objects.create(
+            order=order,
+            product=item.product,
+            quantity=item.quantity
+        )
+        order_contains.save()
+        item.delete()
+
+
+def create_payment_info(account, data):
+    expiration_year = data['expiration_year']
+    expiration_month = data['expiration_month']
+
+    # Check if payment info already exists and delete if it does
+    PaymentInfo.objects.get(account=account).delete()
+
+    PaymentInfo.objects.create(
+        account=account,
+        cvc=data['cvc'],
+        expiration_date=datetime(int(expiration_year), int(expiration_month), 1),
+        street_name=data['street_name'],
+        house_number=data['house_number'],
+        city=data['city'],
+        postal_code=data['postal_code'],
+        name_of_cardholder=data['name_of_cardholder'],
+        card_number=data['card_number']
+    )
+
+def send_confirmation_email(account):
+    if account.email:
+        send_mail(
+            'Ship o Cereal!',
+            'Your order is on its way.',
+            'from@example.com',
+            [account.email],
+            fail_silently=False,
+        )

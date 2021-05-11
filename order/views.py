@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
@@ -26,6 +27,9 @@ def index(request):
             'postal_code': info.postal_code,
             'name_of_cardholder': info.name_of_cardholder,
             'card_number': info.card_number,
+            'expiration_year': info.expiration_date.year,
+            'expiration_month': info.expiration_date.month,
+            'cvc': info.cvc
         }
         payment_form = PaymentInfoForm(initial=initial_info_obj)
     else:

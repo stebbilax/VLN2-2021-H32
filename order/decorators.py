@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from datetime import datetime
-from django.core.mail import send_mail
 
+from .utils import create_order, create_payment_info, send_confirmation_email
 from .forms import PaymentInfoForm
 from order.models import Order, OrderContains
 from account.models import PaymentInfo, Account
@@ -10,6 +10,7 @@ from account.models import PaymentInfo, Account
 def make_order(view_func):
     def wrapper(request, *args, **kwargs):
         if request.method == 'POST':
+
             form = PaymentInfoForm(request.POST)
             if form.is_valid():
                 data = form.cleaned_data
@@ -21,63 +22,19 @@ def make_order(view_func):
                     account, created = Account.objects.get_or_create(device=device)
 
                 cart_items = account.cart.cartitem_set.all()
-                total_price = 0
-                for item in cart_items:
-                    total_price += item.product.price
-                order = Order.objects.create(
-                    user=request.user,
-                    total_price=total_price,
-                    street_name=data['street_name'],
-                    house_number=data['house_number'],
-                    city=data['city'],
-                    postal_code=data['postal_code']
-                )
-                for item in cart_items:
-                    order_contains = OrderContains.objects.create(
-                        order=order,
-                        product=item.product,
-                        quantity=item.quantity
-                    )
-                    order_contains.save()
-                    item.delete()
-
-                # Send confirmation email to user
-
+                create_order(cart_items, request.user, data)
 
                 if data['save_info']:
-                    expiration_year = data['expiration_year']
-                    expiration_month = data['expiration_month']
+                    create_payment_info(account, data)
 
-                    # Check if payment info already exists and delete if it does
-                    PaymentInfo.objects.get(account=account).delete()
-
-                    PaymentInfo.objects.create(
-                        account=account,
-                        cvc=data['cvc'],
-                        expiration_date= datetime(int(expiration_year), int(expiration_month), 1),
-                        street_name=data['street_name'],
-                        house_number=data['house_number'],
-                        city=data['city'],
-                        postal_code=data['postal_code'],
-                        name_of_cardholder=data['name_of_cardholder'],
-                        card_number=data['card_number']
-                    )
-                if account.email:
-                    send_mail(
-                        'Ship o Cereal!',
-                        'Your order is on its way.',
-                        'from@example.com',
-                        [account.email],
-                        fail_silently=False,
-                    )
+                send_confirmation_email(account)
 
                 return render(request, 'order/checkout-confirmation.html')
 
-
             else:
-                print(form.errors)
-                for error in form.errors:
-                    print(error)
+                context = {'form': form}
+                return render(request, 'order/order.html', context)
 
         return view_func(request, *args, **kwargs)
+
     return wrapper

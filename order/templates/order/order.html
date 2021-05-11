@@ -52,6 +52,7 @@
 {#                                </select>#}
                             {{ form.country }}
                         </div>
+                        {{ form.errors }}
                         <div class="row col-md-10 offset-md-1 mb-4 mt-4">
                             <a href="#" class="btn btn-primary btn-lg" id="order-next-button">
                                 Proceed to Payment Information
@@ -137,7 +138,7 @@
                             </button>
                         </div>
                         <div class="col-md-4 mb-4 mt-4 offset-md-4 text-end me-0 p-0">
-                            <a href="../checkout/checkout-contact-info.html" class="btn btn-danger">
+                            <a href="{% url 'cart' %}" class="btn btn-danger">
                                 Cancel order
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x ms-2 mb-1" viewBox="0 0 16 16">
                                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -238,6 +239,7 @@
                                 Save info for future checkouts
                                 {{ form.save_info }}
                             </div>
+
                         </form>
                     </div>
                     <div class="row p-0 ms-1">
@@ -250,7 +252,7 @@
                             </button>
                         </div>
                         <div class="col-md-4 mb-4 mt-4 offset-md-4 text-end me-0 p-0">
-                            <a href="#" class="btn btn-danger">
+                            <a href="{% url 'cart' %}" class="btn btn-danger">
                                 Cancel order
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x ms-2 mb-1" viewBox="0 0 16 16">
                                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -281,6 +283,9 @@
             </div>
         </div>
     </div>
+{% for message in messages %}
+     <p id="messages">{{message}}</p>
+{% endfor %}
 </main>
 <script src="{% static 'js/orderPaginator.js' %}"></script>
 
