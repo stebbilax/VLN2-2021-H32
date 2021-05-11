@@ -1,7 +1,6 @@
 from datetime import datetime
+import re
 from django import forms
-from django.forms import TextInput
-from django.core.exceptions import ValidationError
 from django_countries.fields import CountryField
 
 
@@ -60,3 +59,20 @@ class PaymentInfoForm(forms.Form):
             raise forms.ValidationError("Must be a valid month 1-12")
 
         return expiration_month
+
+    def clean_card_number(self):
+        card_number = self.cleaned_data.get('card_number')
+        visa_pattern = r'^4[0-9]{12}(?:[0-9]{3})?$'
+        mastercard_pattern = r'^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$'
+        american_express_pattern = r'^3[47][0-9]{13}$'
+        discover_pattern = r'^6(?:011|5[0-9]{2})[0-9]{12}$'
+
+        p1 = re.compile(visa_pattern)
+        p2 = re.compile(mastercard_pattern)
+        p3 = re.compile(american_express_pattern)
+        p4 = re.compile(discover_pattern)
+        if not p1.match(card_number) and not p2.match(card_number) and not p3.match(card_number) and not p4.match(
+                card_number):
+            raise forms.ValidationError("Please enter a valid credit card number")
+
+        return card_number

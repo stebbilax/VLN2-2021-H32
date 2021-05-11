@@ -1,5 +1,5 @@
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from .forms import PaymentInfoForm
@@ -12,7 +12,6 @@ def index(request):
     try:
         account = get_object_or_404(Account, user=request.user)
 
-    # If not get or create an account with the users device uuid
     except TypeError:
         device = request.COOKIES['device']
         account, created = Account.objects.get_or_create(device=device)
@@ -34,15 +33,14 @@ def index(request):
         payment_form = PaymentInfoForm(initial=initial_info_obj)
     else:
         payment_form = PaymentInfoForm()
-    try:
-        account = get_object_or_404(Account, user=request.user)
-
-    except TypeError:
-        device = request.COOKIES['device']
-        account, created = Account.objects.get_or_create(device=device)
 
     cart = account.cart
     cart_items = cart.cartitem_set.all()
+
+    # If cart is empty, redirect
+    if len(cart_items) == 0:
+        return redirect('products', 'cereal')
+
     cart_info = {'count': 0, 'price': 0}
     for item in cart_items:
         cart_info['count'] += 1

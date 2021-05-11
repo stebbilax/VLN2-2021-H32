@@ -1,5 +1,5 @@
 from django.core.mail import send_mail
-
+from datetime import datetime
 from order.models import Order, OrderContains
 from account.models import PaymentInfo
 
@@ -31,7 +31,10 @@ def create_payment_info(account, data):
     expiration_month = data['expiration_month']
 
     # Check if payment info already exists and delete if it does
-    PaymentInfo.objects.get(account=account).delete()
+    try:
+        old_info = PaymentInfo.objects.get(account=account).delete()
+    except PaymentInfo.DoesNotExist:
+        pass
 
     PaymentInfo.objects.create(
         account=account,
@@ -44,6 +47,7 @@ def create_payment_info(account, data):
         name_of_cardholder=data['name_of_cardholder'],
         card_number=data['card_number']
     )
+
 
 def send_confirmation_email(account):
     if account.email:
