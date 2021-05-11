@@ -15,7 +15,6 @@
 
         <div class="row row-cols-1 row-cols-md-5 mt-2 g-4">
             <div class="row row-cols-md-1 col-md-8 me-2" id="cart-product-card-container">
-                <!-- CARDS HERE // -->
                 {% for item in items %}
                 <div class="shadow-sm card mb-3 p-2">
                     <div class="row g-0">
@@ -25,7 +24,12 @@
                       <div class="col-md-8">
                         <div class="card-body">
                           <h5 class="card-title mb-4">{{ item.name }}</h5>
-                          <p class="card-text mb-4">Quantity: {{ item.quantity }}</p>
+                          <p class="card-text mb-2">
+                                Quantity:
+                                <div class="btn btn-outline-primary rounded-pill text-sm me-2">-</div>
+                                {{ item.quantity }}
+                                <div class="btn btn-outline-primary rounded-pill text-sm ms-2">+</div>  
+                            </p>
                           <p class="card-text mb-3">Total: ${{ item.total }}</p>
                         </div>
                         <div class="card-footer-white ms-3 mb-2">
@@ -35,7 +39,6 @@
                     </div>
                 </div>
                 {% endfor %}
-            <!-- CARDS END // -->
             </div>
             <div class="card col-md-4 mb-0 mt-0" style="max-height: 500px;">
                 <div class="card-header bg-transparent border-warning fs-4 fw-bold">ORDER SUMMARY</div>
@@ -54,7 +57,7 @@
                             Enjoy your delicious cereal free of worries!
                         </small>
                     </p>
-                </div> <!-- card-body.// -->
+                </div>
                 <div class="card-footer-white text-center mb-2">
                     <a href="{% url 'order' %}" class="btn btn-primary">
                         Go to checkout
@@ -63,7 +66,7 @@
                         </svg>
                     </a>
                 </div>
-            </div> <!-- card.// -->
+            </div>
         </div>
     </div>
 </main>

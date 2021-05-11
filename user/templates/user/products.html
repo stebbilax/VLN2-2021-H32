@@ -45,9 +45,9 @@
                                     <input class="form-check-input price-by-button" name="40-9999" type="radio" name="exampleRadio" value="">
                                     <label class="form-check-label" for="40-9999">$39.99 and above</label>
                                 </label>
-                            </div> <!-- card-body.// -->
+                            </div>
                         </div>
-                    </article> <!-- card-group-item.// -->
+                    </article>
                     <article class="card-group-item">
                         <div id="keyword-container" class="card-header bg-transparent border-warning">Filter</div>
                         <div class="filter-content">
@@ -56,12 +56,11 @@
 
                             </form>
 
-                            </div> <!-- card-body.// -->
+                            </div>
                         </div>
-                    </article> <!-- card-group-item.// -->
-                </div> <!-- card.// -->
+                    </article>
+                </div>
                 <div class="row row-cols-md-4 col-md-9 g-4" id="product-card-container">
-                    <!-- CARDS HERE // -->
                     {% for product in products %}
                     <div class="col mt-0 mb-3">
                         <div class="shadow-sm card h-100 p-3 text-center text-decoration-none">
@@ -76,25 +75,25 @@
                         </div>
                     </div>
                     {% endfor %}
-<div class="pagination">
-    <span class="step-links">
-        {% if products.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ products.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ products.number }} of {{ products.paginator.num_pages }}.
-        </span>
-
-        {% if products.has_next %}
-            <a href="?page={{ products.next_page_number }}">next</a>
-            <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-
-
+                </div>
+                <div class="row col-md-5 offset-md-2">
+                    <div class="pagination ms-5 fs-6">
+                        <span class="step-links">
+                            {% if products.has_previous %}
+                                <a href="?page=1" class="btn btn-outline-primary rounded-pill">&laquo; First</a>
+                                <a href="?page={{ products.previous_page_number }}" class="btn btn-outline-primary ms-2 rounded-pill">Previous</a>
+                            {% endif %}
+    
+                            <span class="current">
+                                Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                            </span>
+    
+                            {% if products.has_next %}
+                                <a href="?page={{ products.next_page_number }}" class="btn btn-outline-primary rounded-pill">Next</a>
+                                <a href="?page={{ products.paginator.num_pages }}" class="btn btn-outline-primary ms-2 rounded-pill">Last &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
