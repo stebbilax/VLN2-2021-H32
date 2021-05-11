@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from datetime import datetime
 
 from .forms import PaymentInfoForm
@@ -39,9 +39,14 @@ def make_order(view_func):
                     )
                     order_contains.save()
 
+                # TODO Empty the users cart
+
                 if data['save_info']:
                     expiration_year = data['expiration_year']
                     expiration_month = data['expiration_month']
+
+                    # Check if payment info already exists and delete if it does
+                    PaymentInfo.objects.get(account=account).delete()
 
                     PaymentInfo.objects.create(
                         account=account,
@@ -54,6 +59,8 @@ def make_order(view_func):
                         name_of_cardholder=data['name_of_cardholder'],
                         card_number=data['card_number']
                     )
+
+                return render(request, 'order/checkout-confirmation.html')
 
 
             else:
