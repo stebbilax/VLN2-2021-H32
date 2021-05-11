@@ -84,7 +84,6 @@ async function getSummaryInfo(){
         },
         url: '/cart/get_summary_info/'
     });
-    console.log(res.data)
     document.getElementById('summary-total').innerHTML = '$' + res.data.summary.total;
 }
 
