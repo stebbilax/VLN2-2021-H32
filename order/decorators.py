@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from datetime import datetime
+from django.core.mail import send_mail
 
 from .forms import PaymentInfoForm
 from order.models import Order, OrderContains
@@ -38,8 +39,10 @@ def make_order(view_func):
                         quantity=item.quantity
                     )
                     order_contains.save()
+                    item.delete()
 
-                # TODO Empty the users cart
+                # Send confirmation email to user
+
 
                 if data['save_info']:
                     expiration_year = data['expiration_year']
@@ -58,6 +61,14 @@ def make_order(view_func):
                         postal_code=data['postal_code'],
                         name_of_cardholder=data['name_of_cardholder'],
                         card_number=data['card_number']
+                    )
+                if account.email:
+                    send_mail(
+                        'Ship o Cereal!',
+                        'Your order is on its way.',
+                        'from@example.com',
+                        [account.email],
+                        fail_silently=False,
                     )
 
                 return render(request, 'order/checkout-confirmation.html')
