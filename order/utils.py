@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from datetime import datetime
+from django.contrib.auth.models import User
 from order.models import Order, OrderContains
 from account.models import PaymentInfo
 
@@ -8,14 +9,31 @@ def create_order(cart_items, user, data):
     total_price = 0
     for item in cart_items:
         total_price += item.product.price
-    order = Order.objects.create(
-        user=user,
-        total_price=total_price,
-        street_name=data['street_name'],
-        house_number=data['house_number'],
-        city=data['city'],
-        postal_code=data['postal_code']
-    )
+    try:
+        order = Order.objects.create(
+            user=user,
+            total_price=total_price,
+            street_name=data['street_name'],
+            house_number=data['house_number'],
+            city=data['city'],
+            postal_code=data['postal_code']
+        )
+    # If the user is anonymous, make a new user unique to this order
+    except ValueError:
+        username = "anonymous-"+str(hash(f"{total_price}{data['street_name']}{datetime.now()}"))
+        password = hash(f"{data['house_number']}{data['city']}{datetime.now()}")
+
+        anon_user = User(username=username, password=password)
+        anon_user.save()
+        order = Order.objects.create(
+            user=anon_user,
+            total_price=total_price,
+            street_name=data['street_name'],
+            house_number=data['house_number'],
+            city=data['city'],
+            postal_code=data['postal_code']
+        )
+
     for item in cart_items:
         order_contains = OrderContains.objects.create(
             order=order,
