@@ -7,8 +7,10 @@ from account.models import SearchHistoryEntry, Account
 def record_search_history(view_func):
     """
     Creates a search history object if there is an account
-    associated with the request user
+    associated with the request user. If the product does not
+    exist, raise a 404.
     """
+
     def wrapper(request, id, *args, **kwargs):
         product = get_object_or_404(Product, pk=id)
         try:
@@ -19,4 +21,5 @@ def record_search_history(view_func):
             pass
 
         return view_func(request, product, *args, **kwargs)
+
     return wrapper

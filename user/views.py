@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.messages import MessageFailure
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.core.paginator import Paginator
@@ -64,10 +65,21 @@ def products_page(request, category):
 
 @record_search_history
 def product_page(request, product):
+    """
+    Receives a request and a product.
+    If request is GET display that product
+    If request is POST add or increment that item in the users cart,
+    then redirect to products.
+    """
     pictures = ProductPhoto.objects.filter(product=product)
-    main_picture = pictures[0]
-    pictures = pictures[1:]
+    try:
+        main_picture = pictures[0]
+        pictures = pictures[1:]
+    except IndexError:
+        main_picture = pictures = []
+
     if request.method == 'POST':
+
         # Check if user is logged in
         try:
             account = get_object_or_404(Account, user=request.user)
@@ -86,7 +98,12 @@ def product_page(request, product):
         else:
             new_cart_item = CartItem.objects.create(cart=cart, product=product)
             new_cart_item.save()
-            messages.info(request, f'{product.name} was added to your cart!')
+
+            try:
+                messages.info(request, f'{product.name} was added to your cart!')
+            except MessageFailure:
+                pass
+
         return redirect('products', 'cereal')
 
     context = {'product': product, 'pictures': pictures, 'main_picture': main_picture}

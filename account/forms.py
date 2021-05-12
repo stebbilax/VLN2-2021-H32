@@ -26,7 +26,6 @@ class LoginForm(forms.Form):
 
 
 class EditAccountForm(forms.ModelForm):
-
     class Meta:
         model = Account
         fields = [
@@ -36,11 +35,12 @@ class EditAccountForm(forms.ModelForm):
             'photo'
         ]
         widgets = {
-            'email': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'first_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'last_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'photo': FileInput()
         }
+
 
 class UserPasswordResetForm(PasswordResetForm):
     def __init__(self, *args, **kwargs):
@@ -51,7 +51,4 @@ class UserPasswordResetForm(PasswordResetForm):
         'placeholder': 'Email',
         'type': 'email',
         'name': 'email'
-        }))
-
-
-
+    }))

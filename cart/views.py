@@ -10,9 +10,9 @@ from account.models import Account
 
 @collect_cart_info
 def cart_page(request, products, summary_data):
-
     context = {'items': products, 'summary': summary_data}
     return render(request, 'cart/cart_page.html', context)
+
 
 @collect_cart_info
 def get_summary_info(request, products, summary_data):
@@ -86,4 +86,3 @@ def remove_item(request, item_id):
         if item.cart.account == account:
             item.delete()
     return redirect("cart")
-
