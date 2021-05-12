@@ -25,7 +25,6 @@ def account_page(request):
             return redirect('account')
 
     user_obj = {'img': account.photo_url}
-    print(user_obj)
 
     context = {'user_obj': user_obj, 'user_form': account_form}
     return render(request, 'account/account_page.html', context)
@@ -66,6 +65,8 @@ def logout_user(request):
 @check_if_user_exists
 def create_account(request):
     """ Handles user creation process """
+    if request.user.is_authenticated:
+        return redirect('account')
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -79,13 +80,10 @@ def create_account(request):
             for msg in form.errors.as_data():
                 if msg == 'email':
                     messages.error(request, f"Declared {email} is not valid")
-                    print(msg)
                 if msg == 'password2' and password1 == password2:
                     messages.error(request, f"Selected password is not strong enough, please try again.")
-                    print(msg)
                 elif msg == 'password2' and password1 != password2:
                     messages.error(request, f"Password and Password Confirmation do not match, please try again.")
-                    print(msg)
 
     context = {"form": form}
     return render(request, 'account/create_user.html', context)
