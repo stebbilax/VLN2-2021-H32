@@ -1,5 +1,6 @@
-from django.urls import path, reverse
+from django.urls import path
 from django.contrib.auth import views as auth_views
+
 from .forms import UserPasswordResetForm
 from .views import (account_page, login_page, logout_user,
                     create_account, search_history_page, delete_account)

@@ -1,4 +1,5 @@
-from django.urls import path, include
+from django.urls import path
+
 from .views import (cart_page, increase_quantity, decrease_quantity, get_item_count, remove_item,
                     get_summary_info)
 

@@ -1,10 +1,15 @@
-from datetime import datetime
 import re
+from datetime import datetime
+
 from django import forms
 from django_countries.fields import CountryField
 
 
 class PaymentInfoForm(forms.Form):
+    """
+    Form used for the checkout process.
+    Handles information used for the creation of Order and PaymentInfo objects
+    """
     name = forms.CharField(max_length=300,
                            widget=forms.TextInput({'class': 'form-control form-control-lg mb-4',
                                                    'placeholder': 'Enter your full name',

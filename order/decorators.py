@@ -1,16 +1,15 @@
 from django.shortcuts import get_object_or_404, render
-from datetime import datetime
 
 from .utils import create_order, create_payment_info, send_confirmation_email
 from .forms import PaymentInfoForm
+
 from account.models import Account
 
 
 def make_order(view_func):
     """
-
-    :param view_func:
-    :return:
+    Handles POST requests to the order page.
+    Form validation, order creation, payment info creation and email confirmation
     """
     def wrapper(request, *args, **kwargs):
         if request.method == 'POST':

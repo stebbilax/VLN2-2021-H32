@@ -1,11 +1,7 @@
-from django.contrib.auth.models import User
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.utils.decorators import method_decorator
-from django.views.generic.edit import DeleteView
-from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from .forms import CreateUserForm, LoginForm, EditAccountForm
 from .decorators import check_if_user_exists
@@ -14,6 +10,11 @@ from .models import Account, SearchHistoryEntry
 
 @login_required(login_url='login')
 def account_page(request):
+    """
+    Handles GET and POST requests to the account page.
+    If GET display the stored account information.
+    If POST update the account information
+    """
     account = Account.objects.get(user=request.user)
     account_form = EditAccountForm(instance=account)
 
@@ -49,6 +50,7 @@ def login_page(request):
 
 @login_required(login_url='login')
 def search_history_page(request):
+    """ Displays the users previous searches """
     search_history = SearchHistoryEntry.objects.filter(account=request.user.account)
     context = {'search_history': search_history}
     return render(request, 'account/search_history.html', context)
@@ -63,6 +65,7 @@ def logout_user(request):
 
 @check_if_user_exists
 def create_account(request):
+    """ Handles user creation process """
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -90,6 +93,7 @@ def create_account(request):
 
 @login_required(login_url='login')
 def delete_account(request):
+    """ Handles account deletion """
     if request.method == 'POST':
         if not request.user.has_perm('auth.view_user'):
             the_account = Account.objects.get(user=request.user)

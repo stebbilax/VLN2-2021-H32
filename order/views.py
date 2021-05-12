@@ -1,9 +1,8 @@
-
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 
 from .forms import PaymentInfoForm
 from .decorators import make_order
+
 from account.models import Account, PaymentInfo
 
 

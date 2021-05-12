@@ -1,11 +1,17 @@
-from django.core.mail import send_mail
 from datetime import datetime
+
+from django.core.mail import send_mail
 from django.contrib.auth.models import User
+
 from order.models import Order, OrderContains
 from account.models import PaymentInfo
 
 
 def create_order(cart_items, user, data):
+    """
+    Creates an Order and OrderContains objects for every product in the users cart
+    Clears cart of any items in the order.
+    """
     total_price = 0
     for item in cart_items:
         total_price += item.product.price
@@ -45,6 +51,10 @@ def create_order(cart_items, user, data):
 
 
 def create_payment_info(account, data):
+    """
+    Creates a PaymentInfo object belonging to the user.
+    If any such object already exists it is overwritten
+    """
     expiration_year = data['expiration_year']
     expiration_month = data['expiration_month']
 
@@ -68,6 +78,9 @@ def create_payment_info(account, data):
 
 
 def send_confirmation_email(account):
+    """
+    Sends an order confirmation to the email belonging to the account
+    """
     if account.email:
         send_mail(
             'Ship o Cereal!',

@@ -1,12 +1,12 @@
 from django.contrib import messages
 from django.contrib.messages import MessageFailure
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 
 from .decorators import record_search_history
-from .models import Product, ProductPhoto, Category, Keyword
+from .models import Product, ProductPhoto, Keyword
 from account.models import Account
 from cart.models import Cart, CartItem
 from .filters import ProductNameFilter, KeywordFilter, OrderFilter, CategoryFilter, GetPhotoFilter

@@ -1,10 +1,10 @@
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from cart.models import Cart, CartItem
-from user.models import Product, Category
+from cart.models import CartItem
 from cart.views import increase_quantity, decrease_quantity
+from user.models import Product, Category
 
 
 class ChangeQuantityTestCase(TestCase):

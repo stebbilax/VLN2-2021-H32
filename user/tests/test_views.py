@@ -2,8 +2,9 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from user.models import Product, Category
 from ..views import product_page
+
+from user.models import Product, Category
 
 
 class ProductPageTestCase(TestCase):
