@@ -16,7 +16,7 @@ def check_item_owner(view_func):
             device = request.COOKIES['device']
             account, created = Account.objects.get_or_create(device=device)
 
-        item = CartItem.objects.get(id=item_id)
+        item = get_object_or_404(CartItem, id=item_id)
         if item.cart.account != account:
             return HttpResponseBadRequest()
 

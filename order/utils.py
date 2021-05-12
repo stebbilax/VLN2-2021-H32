@@ -60,7 +60,7 @@ def create_payment_info(account, data):
 
     # Check if payment info already exists and delete if it does
     try:
-        old_info = PaymentInfo.objects.get(account=account).delete()
+        PaymentInfo.objects.get(account=account).delete()
     except PaymentInfo.DoesNotExist:
         pass
 

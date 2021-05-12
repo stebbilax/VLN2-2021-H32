@@ -11,7 +11,6 @@ def record_search_history(view_func):
     associated with the request user. If the product does not
     exist, raise a 404.
     """
-
     def wrapper(request, id, *args, **kwargs):
         product = get_object_or_404(Product, pk=id)
         try:

@@ -7,6 +7,9 @@ from cart.views import increase_quantity, decrease_quantity
 from user.models import Product, Category
 
 
+# Need test remove item for item that exists and item that doesnt
+# Need test for increment quantity of item that does not exist
+
 class ChangeQuantityTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create(

@@ -50,5 +50,5 @@ def checkout_page(request):
         cart_info['count'] += 1
         cart_info['price'] += item.product.price
 
-    context = {'form': payment_form, 'cart_info': cart_info }
+    context = {'form': payment_form, 'cart_info': cart_info}
     return render(request, 'order/order.html', context)
