@@ -35,7 +35,7 @@ class EditAccountForm(forms.ModelForm):
             'photo'
         ]
         widgets = {
-            'email': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'first_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'last_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'photo': FileInput()
