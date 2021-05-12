@@ -6,6 +6,9 @@
     </script>
 
     <main class="container">
+        {% for message in messages %}
+            <p id="messages">{{message}}</p>
+        {% endfor %}
         <div class="bg-white p-4 rounded">
             <div class="row">
                 <form class="col-md-8 d-flex p-0 me-3">

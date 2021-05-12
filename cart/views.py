@@ -1,8 +1,7 @@
-import json
-
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from .models import Cart, CartItem
+
+from .models import CartItem
 from .decorators import check_item_owner, collect_cart_info
 
 from account.models import Account
@@ -10,9 +9,9 @@ from account.models import Account
 
 @collect_cart_info
 def cart_page(request, products, summary_data):
-
     context = {'items': products, 'summary': summary_data}
     return render(request, 'cart/cart_page.html', context)
+
 
 @collect_cart_info
 def get_summary_info(request, products, summary_data):
@@ -62,6 +61,7 @@ def decrease_quantity(request, item_id):
 
 
 def get_item_count(request):
+    """ Returns the number of cart items belonging to the user """
     try:
         cart = request.user.account.cart
     except AttributeError:
@@ -73,6 +73,7 @@ def get_item_count(request):
 
 
 def remove_item(request, item_id):
+    """ Removes item from the users cart if that item belongs to the request.user """
     item = CartItem.objects.get(id=item_id)
 
     try:
@@ -86,4 +87,3 @@ def remove_item(request, item_id):
         if item.cart.account == account:
             item.delete()
     return redirect("cart")
-

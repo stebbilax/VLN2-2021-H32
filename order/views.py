@@ -1,14 +1,18 @@
-
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 
 from .forms import PaymentInfoForm
 from .decorators import make_order
+
 from account.models import Account, PaymentInfo
 
 
 @make_order
-def index(request):
+def checkout_page(request):
+    """
+    Handles GET requests to the order page.
+    If user has at least one element in their cart, return info about that item
+    If user has no items in their cart, redirect to the products page.
+    """
     try:
         account = get_object_or_404(Account, user=request.user)
 
@@ -48,20 +52,3 @@ def index(request):
 
     context = {'form': payment_form, 'cart_info': cart_info }
     return render(request, 'order/order.html', context)
-
-
-def place_order(request):
-    return HttpResponse('place order')
-
-
-def send_confirmation_email(request):
-    return HttpResponse('send confirmation email')
-
-
-def save_payment_info(request):
-    return HttpResponse('save payment info')
-
-
-def checkout(request):
-    return HttpResponse('checkout')
-

@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from order.models import Order, OrderContains, Product
+
+from order.models import Order
 
 
 class ModelTestCase(TestCase):

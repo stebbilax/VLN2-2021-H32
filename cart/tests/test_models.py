@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from cart.models import Cart, CartItem
+from cart.models import CartItem
 from user.models import Product, Category
 
 

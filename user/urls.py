@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from .views import (index, contact_us_page, about_us_page, products_page, get_product_data,
                     get_keywords, product_page)
 
