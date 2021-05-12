@@ -7,7 +7,7 @@ from cart.views import increase_quantity, decrease_quantity
 from user.models import Product, Category
 
 
-# Need test remove item for item that exists and item that doesnt
+
 # Need test for increment quantity of item that does not exist
 
 class ChangeQuantityTestCase(TestCase):
@@ -86,3 +86,25 @@ class ChangeQuantityTestCase(TestCase):
         decrease_quantity(request, self.cartItem.id)
         item = CartItem.objects.get(id=self.cartItem.id)
         self.assertTrue(item.quantity == 1)
+
+# TODO Finish
+class RemoveItemTestCase(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = User.objects.create(username='TestingBob', email='Bob@bob.com', password='qwerty')
+        self.category = Category.objects.create(name='TestCategory')
+        self.product = Product.objects.create(name='TestProduct',
+                                              supplier='TestSupplier',
+                                              description='TestDescription',
+                                              price=1,
+                                              category=self.category)
+        self.cart_item = CartItem.objects.create(cart=self.user.account.cart, product=self.product, quantity=1)
+
+    def tearDown(self):
+        self.user.delete()
+
+    def test_remove_item_valid(self):
+        pass
+
+    def test_remove_item_invalid(self):
+        pass
