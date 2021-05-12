@@ -128,8 +128,8 @@ function buildKeywordPanel(keywords) {
         let keyword = keywords[i];
         let text = `
             <label class="form-check">
-                <input class="form-check-input keyword-by-button" name="${keyword}" type="checkbox" value="">
-                <span class="form-check-label">${keyword}</span>
+                <input class="form-check-input keyword-by-button" name="${keyword}" type="radio">
+                <span class="form-check-label" for="${keyword}">${keyword}</span>
             </label>
         `
         let doc = parser.parseFromString(text, 'text/html');

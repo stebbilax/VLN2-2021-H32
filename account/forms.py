@@ -1,5 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm
 from django import forms
 from django.forms import TextInput, FileInput
 from django.contrib.auth.models import User
@@ -43,15 +42,29 @@ class EditAccountForm(forms.ModelForm):
         }
 
 class UserPasswordResetForm(PasswordResetForm):
-    def __init__(self, *args, **kwargs):
-        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
 
     email = forms.EmailField(label='', widget=forms.EmailInput(attrs={
         'class': 'form-control form-control-lg mb-3',
         'placeholder': 'Email',
         'type': 'email',
         'name': 'email'
-        }))
+    }))
+
+class UserSetPasswordForm(SetPasswordForm):
+
+    new_password1 = forms.CharField(label='Enter your new password', widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-control-lg mb-3',
+        'placeholder': 'GreatPassword123',
+        'type': 'password',
+        'name': 'password1'
+    }))
+
+    new_password2 = forms.CharField(label='Enter new password again to confirm', widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-control-lg mb-3',
+        'placeholder': 'GreatPassword123',
+        'type': 'password',
+        'name': 'password2'
+    }))
 
 
 
