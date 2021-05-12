@@ -2,7 +2,7 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from user.models import Product, Category, ProductPhoto, Keyword
+from user.models import Product, Category
 from ..views import product_page
 
 
@@ -18,8 +18,7 @@ class ProductPageTestCase(TestCase):
                                               description='TestDescription',
                                               price=1,
                                               category=self.category)
-        self.good_url = reverse('product', args=str(self.product.id))
-        # self.bad_url = reverse('product', args=str(9999))
+        self.good_url = reverse('product', args=[self.product.id])
 
     def tearDown(self):
         self.user.delete()
