@@ -9,6 +9,31 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+    
+    username = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'class': "form-control form-control-lg mb-4 text-center",
+               'id': "inputEmail",
+               'placeholder': 'JohnnyJay23'
+               }
+    ))
+    password1 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'class': "form-control form-control-lg mb-4 text-center",
+               'id': "inputPassword1",
+               'placeholder': 'GreatPassword123'
+               }
+    ))
+    password2 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'class': "form-control form-control-lg mb-4 text-center",
+               'id': "inputPassword2",
+               'placeholder': 'GreatPassword123',
+               }
+    ))
+    email = forms.EmailField(label='', widget=forms.EmailInput(
+        attrs={'class': 'form-control form-control-lg mb-2 text-center',
+               'placeholder': 'johnnyjay@live.com',
+               'type': 'email',
+               'name': 'email'
+    }))
 
 
 class LoginForm(forms.Form):
@@ -52,14 +77,14 @@ class UserPasswordResetForm(PasswordResetForm):
 
 class UserSetPasswordForm(SetPasswordForm):
 
-    new_password1 = forms.CharField(label='Enter your new password', widget=forms.PasswordInput(attrs={
+    new_password1 = forms.CharField(required=True, label='Enter your new password', widget=forms.PasswordInput(attrs={
         'class': 'form-control form-control-lg mb-3',
         'placeholder': 'GreatPassword123',
         'type': 'password',
         'name': 'password1'
     }))
 
-    new_password2 = forms.CharField(label='Enter new password again to confirm', widget=forms.PasswordInput(attrs={
+    new_password2 = forms.CharField(required=True, label='Enter new password again to confirm', widget=forms.PasswordInput(attrs={
         'class': 'form-control form-control-lg mb-3',
         'placeholder': 'GreatPassword123',
         'type': 'password',
