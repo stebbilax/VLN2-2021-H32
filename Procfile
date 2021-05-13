@@ -1,1 +1,1 @@
-web: gunicorn ship_o_cereal.wsgi --log-file -
+ web gunicorn ship_o_cereal.wsgi --log-file -
