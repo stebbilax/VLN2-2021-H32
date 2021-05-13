@@ -88,3 +88,4 @@ def remove_item(request, item_id):
             if item.cart.account == account:
                 item.delete()
         return redirect("cart")
+    return redirect('cart')
