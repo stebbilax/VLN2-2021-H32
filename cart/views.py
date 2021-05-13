@@ -74,16 +74,17 @@ def get_item_count(request):
 
 def remove_item(request, item_id):
     """ Removes item from the users cart if that item belongs to the request.user """
-    item = CartItem.objects.get(id=item_id)
+    if request.method == 'POST':
+        item = CartItem.objects.get(id=item_id)
 
-    try:
-        account = get_object_or_404(Account, user=request.user)
+        try:
+            account = get_object_or_404(Account, user=request.user)
 
-    except TypeError:
-        device = request.COOKIES['device']
-        account, created = Account.objects.get_or_create(device=device)
+        except TypeError:
+            device = request.COOKIES['device']
+            account, created = Account.objects.get_or_create(device=device)
 
-    if item:
-        if item.cart.account == account:
-            item.delete()
-    return redirect("cart")
+        if item:
+            if item.cart.account == account:
+                item.delete()
+        return redirect("cart")
