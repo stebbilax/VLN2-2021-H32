@@ -72,6 +72,7 @@ def product_page(request, product):
     then redirect to products.
     """
     pictures = ProductPhoto.objects.filter(product=product)
+    keywords = Keyword.objects.filter(product=product)
     try:
         main_picture = pictures[0]
         pictures = pictures[1:]
@@ -106,7 +107,7 @@ def product_page(request, product):
 
         return redirect('products', 'cereal')
 
-    context = {'product': product, 'pictures': pictures, 'main_picture': main_picture}
+    context = {'product': product, 'pictures': pictures, 'main_picture': main_picture, 'keywords': keywords}
 
     return render(request, 'user/product.html', context)
 
