@@ -12,25 +12,21 @@ class CreateUserForm(UserCreationForm):
     
     username = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'class': "form-control form-control-lg mb-4 text-center",
-               'id': "inputEmail",
-               'placeholder': 'JohnnyJay23'
+               'id': "inputEmail"
                }
     ))
     password1 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'class': "form-control form-control-lg mb-4 text-center",
-               'id': "inputPassword1",
-               'placeholder': 'GreatPassword123'
+               'id': "inputPassword1"
                }
     ))
     password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'class': "form-control form-control-lg mb-4 text-center",
-               'id': "inputPassword2",
-               'placeholder': 'GreatPassword123',
+               'id': "inputPassword2"
                }
     ))
     email = forms.EmailField(label='', widget=forms.EmailInput(
         attrs={'class': 'form-control form-control-lg mb-2 text-center',
-               'placeholder': 'johnnyjay@live.com',
                'type': 'email',
                'name': 'email'
     }))
