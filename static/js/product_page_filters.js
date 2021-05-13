@@ -49,7 +49,7 @@ function addListeners() {
     for(let i=0; i < priceByButtons.length; i++) {
         let button = priceByButtons[i];
         button.addEventListener('click', e => {
-            queryParameters.setPrice(e.target.name);
+            queryParameters.setPrice(e.target.id);
             refresh();
         })
     };
@@ -59,7 +59,7 @@ function addListeners() {
     for(let i=0; i < keywordByButtons.length; i++) {
         let button = keywordByButtons[i];
         button.addEventListener('click', e => {
-            queryParameters.setKeyword(e.target.name);
+            queryParameters.setKeyword(e.target.id);
             refresh();
         })
     }
@@ -129,7 +129,7 @@ function buildKeywordPanel(keywords) {
         let keyword = keywords[i];
         let text = `
             <label class="form-check">
-                <input class="form-check-input keyword-by-button" name="${keyword}" type="radio">
+                <input class="form-check-input keyword-by-button" name="keywordRadioButtons" id="${keyword}" type="radio">
                 <span class="form-check-label" for="${keyword}">${keyword}</span>
             </label>
         `
