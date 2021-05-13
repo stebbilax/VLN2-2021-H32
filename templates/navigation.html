@@ -28,7 +28,7 @@
         <div class="dropdown text-begin me-2">
             <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 {% if request.user.is_authenticated %}
-                <img src="{{ request.user.account.photo.url }}" alt="User" width="32" height="32" class="rounded-circle">
+                <img src="{{ request.user.account.photo_url }}" alt="User" width="32" height="32" class="rounded-circle">
                 {% else %}
                  <img src="https://ship-o-cereal-bucket.s3.amazonaws.com/default_4ShsN9O.jpg?AWSAccessKeyId=AKIARUQJJGSAX4RFXTUO&Signature=SP2SaciykV7FUhwr9OMTu1GO9es%3D&Expires=1620332994" alt="User" width="32" height="32" class="rounded-circle">
                 {% endif %}
