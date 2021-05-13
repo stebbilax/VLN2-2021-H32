@@ -3,7 +3,7 @@ import datetime
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 
-from account.models import Account, PaymentInfo, SearchHistoryEntry
+from account.models import Account, PaymentInfo
 
 
 class AccountTestCase(TestCase):

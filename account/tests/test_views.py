@@ -8,7 +8,7 @@ class AccountCreationTestCase(TestCase):
     """ Asserting that a Account is registered for every User Created """
 
     def setUp(self):
-        self.user = User.objects.create_user(
+        self.user = User.objects.create(
             username='TestingBob', email='bob@bob.com', password='qwerty'
         )
 

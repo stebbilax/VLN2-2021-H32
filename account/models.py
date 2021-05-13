@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 from user.models import Product
 
 
@@ -21,8 +22,6 @@ class Account(models.Model):
     @property
     def photo_url(self):
         if self.photo:
-
-            print(self.photo)
             return self.photo.url
 
         return 'https://ship-o-cereal-bucket.s3.amazonaws.com/default_4ShsN9O.jpg?AWSAccessKeyId=AKIARUQJJGSAX4RFXTUO&Signature=SP2SaciykV7FUhwr9OMTu1GO9es%3D&Expires=1620332994'

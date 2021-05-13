@@ -1,13 +1,16 @@
 from django.contrib import messages
+from django.contrib.messages import MessageFailure
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
 
 from .decorators import record_search_history
-from .models import Product, ProductPhoto, Category, Keyword
+from .models import Product, ProductPhoto, Keyword
 from account.models import Account
 from cart.models import Cart, CartItem
 from .filters import ProductNameFilter, KeywordFilter, OrderFilter, CategoryFilter, GetPhotoFilter
+from .forms import ContactEmailForm
 
 
 def index(request):
@@ -22,17 +25,22 @@ def about_us_page(request):
     context = {}
     return render(request, 'user/about.html', context)
 
-def four_page(request):
-    context = {}
-    return render(request, 'user/404.html', context)
-
-def page_not_found(request):
-    context = {}
-    return render(request, 'user/pagenotfound.html', context)
-
 
 def contact_us_page(request):
-    context = {}
+    form = ContactEmailForm()
+    if request.method == 'POST':
+        form = ContactEmailForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            send_mail(
+                data['name'],
+                data['message'],
+                data['email'],
+                ['shipocereal@gmail.com'],
+                fail_silently=False,
+            )
+        return redirect('home')
+    context = {'form': form}
     return render(request, 'user/contact.html', context)
 
 
@@ -57,10 +65,22 @@ def products_page(request, category):
 
 @record_search_history
 def product_page(request, product):
+    """
+    Receives a request and a product.
+    If request is GET display that product
+    If request is POST add or increment that item in the users cart,
+    then redirect to products.
+    """
     pictures = ProductPhoto.objects.filter(product=product)
-    main_picture = pictures[0]
-    pictures = pictures[1:]
+    keywords = Keyword.objects.filter(product=product)
+    try:
+        main_picture = pictures[0]
+        pictures = pictures[1:]
+    except IndexError:
+        main_picture = pictures = []
+
     if request.method == 'POST':
+
         # Check if user is logged in
         try:
             account = get_object_or_404(Account, user=request.user)
@@ -79,10 +99,15 @@ def product_page(request, product):
         else:
             new_cart_item = CartItem.objects.create(cart=cart, product=product)
             new_cart_item.save()
-            messages.info(request, f'{product.name} was added to your cart!')
+
+            try:
+                messages.info(request, f'{product.name} was added to your cart!')
+            except MessageFailure:
+                pass
+
         return redirect('products', 'cereal')
 
-    context = {'product': product, 'pictures': pictures, 'main_picture': main_picture}
+    context = {'product': product, 'pictures': pictures, 'main_picture': main_picture, 'keywords': keywords}
 
     return render(request, 'user/product.html', context)
 

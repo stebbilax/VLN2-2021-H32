@@ -1,10 +1,10 @@
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from cart.models import Cart, CartItem
+from cart.models import CartItem
+from cart.views import increase_quantity, decrease_quantity, remove_item
 from user.models import Product, Category
-from cart.views import increase_quantity, decrease_quantity
 
 
 class ChangeQuantityTestCase(TestCase):
@@ -83,3 +83,37 @@ class ChangeQuantityTestCase(TestCase):
         decrease_quantity(request, self.cartItem.id)
         item = CartItem.objects.get(id=self.cartItem.id)
         self.assertTrue(item.quantity == 1)
+
+
+class RemoveItemTestCase(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user1 = User.objects.create(username='TestingBob', email='Bob@bob.com', password='qwerty')
+        self.user2 = User.objects.create(username='TestingBob2', email='Bob@bob.com', password='qwerty')
+
+        self.category = Category.objects.create(name='TestCategory')
+        self.product = Product.objects.create(name='TestProduct',
+                                              supplier='TestSupplier',
+                                              description='TestDescription',
+                                              price=1,
+                                              category=self.category)
+        self.cart_item1 = CartItem.objects.create(cart=self.user1.account.cart, product=self.product, quantity=1)
+        self.cart_item2 = CartItem.objects.create(cart=self.user2.account.cart, product=self.product, quantity=1)
+
+        self.url = reverse('remove_item', args=[self.cart_item1.id])
+
+    def tearDown(self):
+        self.user1.delete()
+        self.user2.delete()
+
+    def test_remove_item_valid(self):
+        request = self.factory.post(self.url)
+        request.user = self.user1
+        remove_item(request, self.cart_item1.id)
+        self.assertTrue(len(self.user1.account.cart.cartitem_set.all()) == 0)
+
+    def test_remove_item_invalid(self):
+        request = self.factory.post(self.url)
+        request.user = self.user2
+        remove_item(request, self.cart_item1.id)
+        self.assertTrue(len(self.user1.account.cart.cartitem_set.all()) == 1)

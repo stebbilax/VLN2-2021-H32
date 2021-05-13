@@ -2,26 +2,34 @@ from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 
 from .models import CartItem, Cart, Account
-from user.models import Product, ProductPhoto
-from user.filters import GetPhotoFilter
+
+from user.models import ProductPhoto
 
 
 def check_item_owner(view_func):
     """ Prevents a user from modifying another users cart items """
+    def wrapper(request, item_id, *args, **kwargs):
+        try:
+            account = get_object_or_404(Account, user=request.user)
 
-    def wrapper(request, *args, **kwargs):
-        item_id = args[0]
-        item = CartItem.objects.get(id=item_id)
-        if item.cart.account.user != request.user:
+        except TypeError:
+            device = request.COOKIES['device']
+            account, created = Account.objects.get_or_create(device=device)
+
+        item = get_object_or_404(CartItem, id=item_id)
+        if item.cart.account != account:
             return HttpResponseBadRequest()
 
-        return view_func(request, *args, **kwargs)
+        return view_func(request, item_id, *args, **kwargs)
 
     return wrapper
 
 
-# Todo handle exception
 def collect_cart_info(view_func):
+    """
+    Collects various information about the users cart and sends it along with the request
+    to the view function.
+    """
     def wrapper(request, *args, **kwargs):
         try:
             account = get_object_or_404(Account, user=request.user)

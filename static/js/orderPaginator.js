@@ -35,8 +35,6 @@ function insertSummary(obj) {
 }
 
 
-
-
 const pageState = {
     page: 1,
     nextPage: function(){ if (this.page !== 3) {
@@ -68,7 +66,7 @@ const pageObj = {
         } else if (pageState.page === 3) {
             let obj = makeFormObject();
             this.pageThree.style.display = 'block'
-            insertSummary(obj)
+            insertSummary(obj);
         }
     }
 }
@@ -81,7 +79,7 @@ function addOrderEventListeners(){
     for(let i=0; i < nextButtons.length; i++) {
         let btn = nextButtons[i];
         btn.addEventListener('click', e => {
-            pageState.nextPage()
+            pageState.nextPage();
         })
     };
     for(let i=0; i < prevButtons.length; i++) {
@@ -96,6 +94,6 @@ function addOrderEventListeners(){
 
 
 
-orderPageMain()
+orderPageMain();
 
 

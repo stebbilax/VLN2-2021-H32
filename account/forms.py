@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm
 from django import forms
 from django.forms import TextInput, FileInput
 from django.contrib.auth.models import User
@@ -9,6 +9,27 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+    
+    username = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'class': "form-control form-control-lg mb-4 text-center",
+               'id': "inputEmail"
+               }
+    ))
+    password1 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'class': "form-control form-control-lg mb-4 text-center",
+               'id': "inputPassword1"
+               }
+    ))
+    password2 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'class': "form-control form-control-lg mb-4 text-center",
+               'id': "inputPassword2"
+               }
+    ))
+    email = forms.EmailField(label='', widget=forms.EmailInput(
+        attrs={'class': 'form-control form-control-lg mb-2 text-center',
+               'type': 'email',
+               'name': 'email'
+    }))
 
 
 class LoginForm(forms.Form):
@@ -35,11 +56,36 @@ class EditAccountForm(forms.ModelForm):
             'photo'
         ]
         widgets = {
-            'email': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'first_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'last_name': TextInput(attrs={'class': 'form-control form-control-lg mb-4'}),
             'photo': FileInput()
         }
+
+class UserPasswordResetForm(PasswordResetForm):
+
+    email = forms.EmailField(label='', widget=forms.EmailInput(attrs={
+        'class': 'form-control form-control-lg mb-3',
+        'placeholder': 'Email',
+        'type': 'email',
+        'name': 'email'
+    }))
+
+class UserSetPasswordForm(SetPasswordForm):
+
+    new_password1 = forms.CharField(required=True, label='Enter your new password', widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-control-lg mb-3',
+        'placeholder': 'GreatPassword123',
+        'type': 'password',
+        'name': 'password1'
+    }))
+
+    new_password2 = forms.CharField(required=True, label='Enter new password again to confirm', widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-control-lg mb-3',
+        'placeholder': 'GreatPassword123',
+        'type': 'password',
+        'name': 'password2'
+    }))
 
 
 

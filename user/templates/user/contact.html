@@ -18,21 +18,27 @@
                 </p>
             </div>
             <div class="col-md-6">
-                <div class="form-floating">
-                    <input type="name" id="inputName" class="form-control form-control-lg mb-4" placeholder="Enter your full name">
-                    <label for="inputName" class="form-label">Name</label>
-                </div>
-                <div class="form-floating">
-                    <input type="email" id="inputEmail" class="form-control form-control-lg mb-4" placeholder="Enter your email">
-                    <label for="inputEmail" class="form-label">Email</label>
-                </div>
-                <div class="form-floating">
-                    <textarea id="inputMessage" class="form-control form-control-lg mb-4" placeholder="Enter your message" rows="3" style="height: 150px;"></textarea>
-                    <label for="inputMessage" class="form-label">Message</label>
-                </div>
-                <div class="row me-1">
-                    <button type="button" class="col-md-4 offset-md-8 btn btn-outline-primary mt-2" id="edit-profile-btn">Submit</button>
-                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-floating">
+{#                        <input type="name" id="inputName" class="form-control form-control-lg mb-4" placeholder="Enter your full name">#}
+                        {{ form.name }}
+                        <label for="inputName" class="form-label">Name</label>
+                    </div>
+                    <div class="form-floating">
+{#                        <input type="email" id="inputEmail" class="form-control form-control-lg mb-4" placeholder="Enter your email">#}
+                        {{ form.email }}
+                        <label for="inputEmail" class="form-label">Email</label>
+                    </div>
+                    <div class="form-floating">
+{#                        <textarea id="inputMessage" class="form-control form-control-lg mb-4" placeholder="Enter your message" rows="3" style="height: 150px;"></textarea>#}
+                        {{ form.message }}
+                        <label for="inputMessage" class="form-label">Message</label>
+                    </div>
+                    <div class="row me-1">
+                        <button type="submit" class="col-md-4 offset-md-8 btn btn-outline-primary mt-2" id="edit-profile-btn">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

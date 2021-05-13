@@ -52,6 +52,7 @@
 {#                                </select>#}
                             {{ form.country }}
                         </div>
+                        {{ form.errors }}
                         <div class="row col-md-10 offset-md-1 mb-4 mt-4">
                             <a href="#" class="btn btn-primary btn-lg" id="order-next-button">
                                 Proceed to Payment Information
@@ -137,7 +138,7 @@
                             </button>
                         </div>
                         <div class="col-md-4 mb-4 mt-4 offset-md-4 text-end me-0 p-0">
-                            <a href="../checkout/checkout-contact-info.html" class="btn btn-danger">
+                            <a href="{% url 'cart' %}" class="btn btn-danger">
                                 Cancel order
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x ms-2 mb-1" viewBox="0 0 16 16">
                                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -227,18 +228,25 @@
                             <label for="cvc-readonly" class="form-label fw-bold ms-3">CVC</label>
                             <input type="text" id="cvc-readonly" readonly class="form-control form-control-lg mb-4" value="201">
                         </div>
-                            <div class="row col-md-10 offset-md-1 mb-4 mt-4">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    Place Order
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle ms-2 mb-1" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                                    </svg>
-                                </button>
+                        <div class="row col-md-10 offset-md-1 mb-4 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Place Order
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle ms-2 mb-1" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="row mb-2">
+                            {% if request.user.is_authenticated %}
+                            <div class="col-md-5 offset-md-1 pe-0">
                                 Save info for future checkouts
+                            </div>
+                            <div class="col-md-2 ps-0">
                                 {{ form.save_info }}
                             </div>
-                        </form>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="row p-0 ms-1">
                         <div class="col-md-4 mb-4 mt-4 p-0">
@@ -250,7 +258,7 @@
                             </button>
                         </div>
                         <div class="col-md-4 mb-4 mt-4 offset-md-4 text-end me-0 p-0">
-                            <a href="#" class="btn btn-danger">
+                            <a href="{% url 'cart' %}" class="btn btn-danger">
                                 Cancel order
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x ms-2 mb-1" viewBox="0 0 16 16">
                                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -281,6 +289,9 @@
             </div>
         </div>
     </div>
+{% for message in messages %}
+     <p id="messages">{{message}}</p>
+{% endfor %}
 </main>
 <script src="{% static 'js/orderPaginator.js' %}"></script>
 

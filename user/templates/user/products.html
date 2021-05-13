@@ -6,6 +6,9 @@
     </script>
 
     <main class="container">
+        {% for message in messages %}
+            <p id="messages">{{message}}</p>
+        {% endfor %}
         <div class="bg-white p-4 rounded">
             <div class="row">
                 <form class="col-md-8 d-flex p-0 me-3">
@@ -30,64 +33,44 @@
                         <div class="filter-content">
                             <div class="card-body">
                                 <label class="form-check">
-                                    <input class="form-check-input price-by-button" name="10-20" type="radio" name="exampleRadio" value="">
+                                    <input class="form-check-input price-by-button" name="priceRadioButtons" id="10-20" type="radio" value="">
                                     <label class="form-check-label" for="10-20">$9.99-$19.99</label>
                                 </label>
                                 <label class="form-check">
-                                    <input class="form-check-input price-by-button" name="20-30" type="radio" name="exampleRadio" value="">
+                                    <input class="form-check-input price-by-button" name="priceRadioButtons" id="20-30" type="radio" value="">
                                     <label class="form-check-label" for="20-30">$19.99-$29.99</label>
                                 </label>
                                 <label class="form-check">
-                                    <input class="form-check-input price-by-button" name="30-40" type="radio" name="exampleRadio" value="">
+                                    <input class="form-check-input price-by-button" name="priceRadioButtons" id="30-40" type="radio" value="">
                                     <label class="form-check-label" for="30-40">$29.99-$39.99</label>
                                 </label>
                                 <label class="form-check">
-                                    <input class="form-check-input price-by-button" name="40-9999" type="radio" name="exampleRadio" value="">
+                                    <input class="form-check-input price-by-button" name="priceRadioButtons" id="40-9999" type="radio" value="">
                                     <label class="form-check-label" for="40-9999">$39.99 and above</label>
                                 </label>
-                            </div> <!-- card-body.// -->
+                            </div>
                         </div>
-                    </article> <!-- card-group-item.// -->
+                    </article>
                     <article class="card-group-item">
-                        <div class="card-header bg-transparent border-warning">Filter</div>
+                        <div id="keyword-container" class="card-header bg-transparent border-warning">Filter</div>
                         <div class="filter-content">
                             <div class="card-body">
                             <form id="keyword-container">
-                                <label class="form-check">
-                                    <input class="form-check-input keyword-by-button" name="Fibery" type="checkbox" value="">
-                                    <span class="form-check-label">Fibery</span>
-                                </label> <!-- form-check.// -->
-                                <label class="form-check">
-                                    <input class="form-check-input keyword-by-button" name="Gluten Free" type="checkbox" value="">
-                                    <span class="form-check-label">Gluten Free</span>
-                                </label> <!-- form-check.// -->
-                                <label class="form-check">
-                                    <input class="form-check-input keyword-by-button" name="Healthy" type="checkbox" value="">
-                                    <span class="form-check-label">Healthy</span>
-                                </label>  <!-- form-check.// -->
-                                <label class="form-check">
-                                    <input class="form-check-input keyword-by-button" name="Multigrain" type="checkbox" value="">
-                                    <span class="form-check-label">Multigrain</span>
-                                </label>  <!-- form-check.// -->
-                                <label class="form-check">
-                                    <input class="form-check-input keyword-by-button" name="Sugary" type="checkbox" value="">
-                                    <span class="form-check-label">Sugary</span>
-                                </label>  <!-- form-check.// -->
+
                             </form>
 
-                            </div> <!-- card-body.// -->
+                            </div>
                         </div>
-                    </article> <!-- card-group-item.// -->
-                </div> <!-- card.// -->
+                    </article>
+                </div>
                 <div class="row row-cols-md-4 col-md-9 g-4" id="product-card-container">
-                    <!-- CARDS HERE // -->
                     {% for product in products %}
                     <div class="col mt-0 mb-3">
                         <div class="shadow-sm card h-100 p-3 text-center text-decoration-none">
                             <img src="{{product.img}}" class="card-img-top mx-auto" alt="..." style="width: auto; max-height: 150px">
                             <div class="card-body">
                                 <h5 class="card-title">{{product.name }}</h5>
-                                <p class="card-text">Price: {{product.price}}</p>
+                                <p class="card-text">Price: ${{product.price}}</p>
                             </div>
                             <div class="card-footer-white text-center mb-2">
                                 <a href="{% url 'product' product.id %}" class="btn btn-primary stretched-link">View product</a>
@@ -95,25 +78,25 @@
                         </div>
                     </div>
                     {% endfor %}
-<div class="pagination">
-    <span class="step-links">
-        {% if products.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ products.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ products.number }} of {{ products.paginator.num_pages }}.
-        </span>
-
-        {% if products.has_next %}
-            <a href="?page={{ products.next_page_number }}">next</a>
-            <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-
-
+                </div>
+                <div class="row col-md-5 offset-md-2 mt-2">
+                    <div class="pagination ms-5 fs-6">
+                        <span class="step-links">
+                            {% if products.has_previous %}
+                                <a href="?page=1" class="btn btn-outline-primary rounded-pill">&laquo; First</a>
+                                <a href="?page={{ products.previous_page_number }}" class="btn btn-outline-primary ms-2 rounded-pill">Previous</a>
+                            {% endif %}
+    
+                            <span class="current">
+                                Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                            </span>
+    
+                            {% if products.has_next %}
+                                <a href="?page={{ products.next_page_number }}" class="btn btn-outline-primary rounded-pill">Next</a>
+                                <a href="?page={{ products.paginator.num_pages }}" class="btn btn-outline-primary ms-2 rounded-pill">Last &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

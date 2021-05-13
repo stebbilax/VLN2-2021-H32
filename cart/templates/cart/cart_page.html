@@ -15,9 +15,11 @@
 
         <div class="row row-cols-1 row-cols-md-5 mt-2 g-4">
             <div class="row row-cols-md-1 col-md-8 me-2" id="cart-product-card-container">
-                <!-- CARDS HERE // -->
+                {% if summary.total == 0 %}
+                    <h1>Your cart is empty</h1>
+                {% endif %}
                 {% for item in items %}
-                <div class="shadow-sm card mb-3 p-2">
+                <div class="shadow-sm card mb-3 p-2" id="card-{{ item.id }}">
                     <div class="row g-0">
                       <div class="col-md-4">
                         <img src="{{ item.img }}" alt="..." style="max-width: auto; max-height: 200px;">
@@ -25,8 +27,12 @@
                       <div class="col-md-8">
                         <div class="card-body">
                           <h5 class="card-title mb-4">{{ item.name }}</h5>
-                          <p class="card-text mb-4">Quantity: {{ item.quantity }}</p>
-                          <p class="card-text mb-3">Total: ${{ item.total }}</p>
+                          <p class="card-text mb-2">
+                                Quantity:
+                                <div name="{{ item.id }}" class="btn btn-outline-primary rounded-pill text-sm me-2 decrement-button">-</div>
+                                    <div class="btn  rounded-pill text-sm me-2" id="item-{{ item.id }}">{{ item.quantity }}</div>
+                                <div name="{{ item.id }}" class="btn btn-outline-primary rounded-pill text-sm ms-2 increment-button">+</div>
+                            </p>
                         </div>
                         <div class="card-footer-white ms-3 mb-2">
                             <a href="{% url 'remove_item' item.id %}" class="btn btn-outline-danger">Remove</a>
@@ -35,7 +41,6 @@
                     </div>
                 </div>
                 {% endfor %}
-            <!-- CARDS END // -->
             </div>
             <div class="card col-md-4 mb-0 mt-0" style="max-height: 500px;">
                 <div class="card-header bg-transparent border-warning fs-4 fw-bold">ORDER SUMMARY</div>
@@ -45,7 +50,7 @@
                         <div class="card-header bg-transparent border-warning"></div>
                         <p class="card-text mb-2 mt-2 fs-4">Delivery: FREE</p>
                         <div class="card-header bg-transparent border-warning"></div>
-                        <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: ${{ summary.total }}</p>
+                        <p class="card-text mb-2 mt-4 fs-4 fw-bold">Total: <div id="summary-total" >${{ summary.total }}</div></p>
                     </div>
                     <p class="card-text mt-3">
                         <small class="text-muted">
@@ -54,16 +59,18 @@
                             Enjoy your delicious cereal free of worries!
                         </small>
                     </p>
-                </div> <!-- card-body.// -->
-                <div class="card-footer-white text-center mb-2">
-                    <a href="{% url 'order' %}" class="btn btn-primary">
-                        Go to checkout
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-                        </svg>
-                    </a>
                 </div>
-            </div> <!-- card.// -->
+                <div class="card-footer-white text-center mb-2">
+                    {% if summary.total != 0 %}
+                        <a href="{% url 'order' %}" class="btn btn-primary">
+                            Go to checkout
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 </main>
