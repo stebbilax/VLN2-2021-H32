@@ -33,19 +33,19 @@
                         <div class="filter-content">
                             <div class="card-body">
                                 <label class="form-check">
-                                    <input class="form-check-input price-by-button" name="10-20" type="radio" name="exampleRadio" value="">
+                                    <input class="form-check-input price-by-button" name="10-20" type="radio" value="">
                                     <label class="form-check-label" for="10-20">$9.99-$19.99</label>
                                 </label>
                                 <label class="form-check">
-                                    <input class="form-check-input price-by-button" name="20-30" type="radio" name="exampleRadio" value="">
+                                    <input class="form-check-input price-by-button" name="20-30" type="radio" value="">
                                     <label class="form-check-label" for="20-30">$19.99-$29.99</label>
                                 </label>
                                 <label class="form-check">
-                                    <input class="form-check-input price-by-button" name="30-40" type="radio" name="exampleRadio" value="">
+                                    <input class="form-check-input price-by-button" name="30-40" type="radio" value="">
                                     <label class="form-check-label" for="30-40">$29.99-$39.99</label>
                                 </label>
                                 <label class="form-check">
-                                    <input class="form-check-input price-by-button" name="40-9999" type="radio" name="exampleRadio" value="">
+                                    <input class="form-check-input price-by-button" name="40-9999" type="radio" value="">
                                     <label class="form-check-label" for="40-9999">$39.99 and above</label>
                                 </label>
                             </div>
@@ -70,7 +70,7 @@
                             <img src="{{product.img}}" class="card-img-top mx-auto" alt="..." style="width: auto; max-height: 150px">
                             <div class="card-body">
                                 <h5 class="card-title">{{product.name }}</h5>
-                                <p class="card-text">Price: {{product.price}}$</p>
+                                <p class="card-text">Price: ${{product.price}}</p>
                             </div>
                             <div class="card-footer-white text-center mb-2">
                                 <a href="{% url 'product' product.id %}" class="btn btn-primary stretched-link">View product</a>
@@ -79,7 +79,7 @@
                     </div>
                     {% endfor %}
                 </div>
-                <div class="row col-md-5 offset-md-2">
+                <div class="row col-md-5 offset-md-2 mt-2">
                     <div class="pagination ms-5 fs-6">
                         <span class="step-links">
                             {% if products.has_previous %}

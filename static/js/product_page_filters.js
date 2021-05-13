@@ -74,14 +74,15 @@ function renderItems(itemArray){
     for(let i=0; i < itemArray.length; i++){
         let product = itemArray[i];
         let text = `
-            <div class="col">
+            <div class="col mt-0 mb-3">
                 <div class="shadow-sm card h-100 p-3 text-center text-decoration-none">
                     <img src="${product.img}" class="card-img-top mx-auto" alt="..." style="width: auto; max-height: 150px">
                     <div class="card-body">
-                    <h5 class="card-title">${product.name }</h5>
-                    <p class="card-text">Price: ${product.price} </p>
-                    <a href="../product/product.html" class="stretched-link"></a>
-                    <a href="../cart/cart.html" class="btn btn-primary">Add to cart</a>
+                        <h5 class="card-title">${product.name }</h5>
+                        <p class="card-text">Price: $${product.price}</p>
+                    </div>
+                    <div class="card-footer-white text-center mb-2">
+                        <a href="/product/${product.id}/" class="btn btn-primary stretched-link">View product</a>
                     </div>
                 </div>
             </div>
@@ -128,8 +129,8 @@ function buildKeywordPanel(keywords) {
         let keyword = keywords[i];
         let text = `
             <label class="form-check">
-                <input class="form-check-input keyword-by-button" name="${keyword}" type="checkbox" value="">
-                <span class="form-check-label">${keyword}</span>
+                <input class="form-check-input keyword-by-button" name="${keyword}" type="radio">
+                <span class="form-check-label" for="${keyword}">${keyword}</span>
             </label>
         `
         let doc = parser.parseFromString(text, 'text/html');
