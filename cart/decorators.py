@@ -1,5 +1,5 @@
 from django.http import HttpResponseBadRequest
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from .models import CartItem, Cart, Account
 
@@ -18,7 +18,7 @@ def check_item_owner(view_func):
 
         item = get_object_or_404(CartItem, id=item_id)
         if item.cart.account != account:
-            return HttpResponseBadRequest()
+            return redirect('home')
 
         return view_func(request, item_id, *args, **kwargs)
 

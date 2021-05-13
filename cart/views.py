@@ -35,6 +35,8 @@ def increase_quantity(request, item_id):
             return HttpResponse({item.quantity})
         else:
             return HttpResponseBadRequest()
+    else:
+        return redirect('home')
 
 
 @check_item_owner
@@ -58,7 +60,8 @@ def decrease_quantity(request, item_id):
                 return HttpResponse({item.quantity})
         else:
             return HttpResponseBadRequest()
-
+    else:
+        return redirect('home')
 
 def get_item_count(request):
     """ Returns the number of cart items belonging to the user """
