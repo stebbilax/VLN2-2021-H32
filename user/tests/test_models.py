@@ -1,7 +1,6 @@
 from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser, User
 
-from user.models import Product, Category, ProductPhoto, Keyword
+from user.models import Product, Category, Keyword
 
 
 class ProductTestCase(TestCase):

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="container">
+    <p class="fs-2 offset-md-1">Contact Us</p>
+    <div class="bg-white p-2 rounded">
+        <div class="row">
+            <div class="col-md-6 mt-4">
+                <img src="{% static 'images/logo-black.svg' %}" alt="Logo" class="col-md-8 offset-md-2 img-fluid">
+                <p class="fs-5 offset-md-1 text-center mt-3">
+                    Ship O'Cereal&reg;<br>
+                    105 Crunch St.<br>
+                    Milkville CRL 4021<br>
+                    Cerealland<br>
+                    +611 2921 4176<br>
+                    contact@shipocereal.com
+                </p>
+            </div>
+            <div class="col-md-6">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-floating">
+{#                        <input type="name" id="inputName" class="form-control form-control-lg mb-4" placeholder="Enter your full name">#}
+                        {{ form.name }}
+                        <label for="inputName" class="form-label">Name</label>
+                    </div>
+                    <div class="form-floating">
+{#                        <input type="email" id="inputEmail" class="form-control form-control-lg mb-4" placeholder="Enter your email">#}
+                        {{ form.email }}
+                        <label for="inputEmail" class="form-label">Email</label>
+                    </div>
+                    <div class="form-floating">
+{#                        <textarea id="inputMessage" class="form-control form-control-lg mb-4" placeholder="Enter your message" rows="3" style="height: 150px;"></textarea>#}
+                        {{ form.message }}
+                        <label for="inputMessage" class="form-label">Message</label>
+                    </div>
+                    <div class="row me-1">
+                        <button type="submit" class="col-md-4 offset-md-8 btn btn-outline-primary mt-2" id="edit-profile-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+

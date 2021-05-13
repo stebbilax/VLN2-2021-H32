@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="container">
+    <div class="row">
+        <div class="col-md-12 mt-2">
+            <p class="fs-2">About us</p>
+        </div>
+    <div class="bg-white p-2 rounded">
+        <div class="row">
+            <div class="col-md-12 mt-0">
+                <p class="fs-5 lh-lg">
+                    People love cereal and will always do! That is why we have created a website where people can buy a variety of different cereal from all around the world.<br>
+                    Our store contains cereal from Cheerios to Cap'n Crunch!<br>
+                    Our mission is to create the best online cereal store there is.<br>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-2">
+          <p class="fs-2">Our team</p>
+      </div>
+    </div>
+    <div class="bg-light p-2 rounded">
+        <div class="card-group">
+            <div class="shadow-sm card p-2 me-4">
+                <img src="{% static 'images/employee1.png' %}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Arnar Már Kristinsson</h5>
+                    <p class="card-text">
+                        CEO<br>
+                        Chief Executive Officer<br>
+                        arnar@shipocereal.com
+                    </p>
+                </div>
+                <div class="card-footer-white text-center mb-2">
+                    <a href={% url 'contact' %} class="btn btn-outline-primary">Contact</a>
+                </div>
+            </div>
+            <div class="shadow-sm card p-2 me-4">
+                <img src="{% static 'images/employee2.png' %}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Hildur Guðrún Bragadóttir</h5>
+                    <p class="card-text">
+                        COO<br>
+                        Chief Operating Officer<br>
+                        hildur@shipocereal.com
+                    </p>
+                </div>
+                <div class="card-footer-white text-center mb-2">
+                    <a href={% url 'contact' %} class="btn btn-outline-primary">Contact</a>
+                </div>
+            </div>
+            <div class="shadow-sm card p-2 me-4">
+                <img src="{% static 'images/employee3.png' %}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Kinga Maria Rozanska</h5>
+                    <p class="card-text">
+                        CFO<br>
+                        Chief Financial Officer<br>
+                        kinga@shipocereal.com
+                    </p>
+                </div>
+                <div class="card-footer-white text-center mb-2">
+                    <a href={% url 'contact' %} class="btn btn-outline-primary">Contact</a>
+                </div>
+            </div>
+            <div class="shadow-sm card p-2">
+                <img src="{% static 'images/employee4.png' %}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Stefán Laxdal</h5>
+                    <p class="card-text">
+                        CMO<br>
+                        Chief Marketing Officer<br>
+                        stefan@shipocereal.com
+                    </p>
+                </div>
+                <div class="card-footer-white text-center mb-2">
+                    <a href={% url 'contact' %} class="btn btn-outline-primary">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+

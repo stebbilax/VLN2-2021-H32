@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container min-vh-100">
+    <form method="post">
+        {% csrf_token %}
+        <div class="bg-white p-2 rounded text-center">
+            <div class="row">
+                <p class="fs-4 text-center mt-5">Are you sure you want to delete your account?</p>
+            </div>
+            <div class="row">
+                <p class="fs-5 text-center mt-3">This action cannot be reversed</p>
+            </div>
+            <div class="row mt-5">
+                <button type="submit" class="btn btn-danger col-md-4 offset-md-4 mt-2" id="delete-btn">Delete</button>
+            </div>
+        </div>
+        <a href="{% url 'home' %}" class="col-md-4 offset-md-4 btn btn-outline-secondary mt-2" id="delete-btn">Cancel</a>
+    </form>
+    {% for message in messages %}
+        <p id="messages">{{message}}</p>
+    {% endfor %}
+</main>
+{% endblock %}

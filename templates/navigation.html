@@ -1,0 +1,58 @@
+{% load static %}
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+    <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo-black.svg' %}" alt="Ship O'Cereal logo" class="img-fluid" style="max-width: 130px;"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item fs-5">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fs-5" href="#" id="products" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+            <ul class="dropdown-menu" aria-labelledby="products">
+            <li><a class="dropdown-item" href="{% url 'products' 'cereal' %}">Cereal</a></li>
+            <li><a class="dropdown-item" href="{% url 'products' 'merch'  %}">Merchandise</a></li>
+            </ul>
+        </li>
+        <li class="nav-item fs-5">
+            <a class="nav-link" href="{% url 'about' %}">About Us</a>
+        </li>
+        <li class="nav-item fs-5">
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+        </li>
+        </ul>
+        {% if user.is_authenticated %}
+        <div class="dropdown text-begin me-2">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if request.user.account.photo %}
+                <img src="{{ request.user.account.photo.url }}" alt="User" width="32" height="32" class="rounded-circle">
+                {% else %}
+                 <img src="{% static 'images/placeholder.png' %}" alt="User" width="32" height="32" class="rounded-circle">
+                {% endif %}
+            </a>
+            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="{% url 'account' %}">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
+            </ul>
+        </div>
+        {% else %}
+            <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
+        {% endif %}
+        <ul class="navbar-nav me-4">
+            <li class="nav-item text-decoration-none">
+                <a href="{% url 'cart' %}" class="nav-link">
+                    <button type="button" class="btn btn-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+                        </svg><span class="badge rounded-pill bg-primary ms-1" id="cart-counter-display"></span>
+                    </button>
+                </a>
+            </li>
+        </ul>
+    </div>
+    </div>
+    </nav>
