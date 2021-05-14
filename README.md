@@ -1,5 +1,5 @@
 # Ship-O-Cereal
-####Assignment for T-220-VLN2 2021
+###Assignment for T-220-VLN2 2021
 
 ### Hosting
 The site can be accessed online at https://ship-o-cereal.herokuapp.com/ \
